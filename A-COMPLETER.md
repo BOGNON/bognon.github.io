@@ -4,29 +4,22 @@ Site : http://localhost:4173/portfolio-test/ · build du 2026-10-28
 
 | Langue | Information à fournir | Pages |
 | --- | --- | --- |
+| fr | informations sur le projet BOGNON MARKET | /portfolio/bognon-market/ (projet masqué) |
 | fr | niveau | /a-propos/ |
 | fr | dates, employeurs ou clients de ces expériences | /a-propos/ |
-| fr | année | /a-propos/, /portfolio/la-mine-d-or-des-entrepreneurs/, /portfolio/bognon-market/ |
+| fr | année | /a-propos/, /portfolio/la-mine-d-or-des-entrepreneurs/ |
 | fr | confirmer ou retirer la « Licence en recherche informatique » citée sur l'ancien site, absente du CV | /a-propos/ |
-| fr | description de BOGNON MARKET, citée sur votre ancien portfolio mais absente du CV | /portfolio/, /portfolio/bognon-market/ |
 | fr | ajoutez vos projets clients réels : nom, contexte, année, technologies, lien, captures d’écran et accord du client | /portfolio/ |
 | fr | numérique, papier ou les deux | /portfolio/la-mine-d-or-des-entrepreneurs/ |
-| fr | objectif, public, réalisations et résultats vérifiables | /portfolio/bognon-market/ |
-| fr | votre rôle (fondateur ?) | /portfolio/bognon-market/ |
-| fr | liens LinkedIn, GitHub, Facebook… à ajouter dans src/content/site.mjs | /contact/ |
 | fr | préciser si vous répondez en anglais | /contact/ |
-| fr | numéro IFU, si l’activité est déclarée | /mentions-legales/ |
-| fr | numéro RCCM, si l’activité est immatriculée | /mentions-legales/ |
+| fr | liens LinkedIn, GitHub, Facebook… à ajouter dans src/content/site.mjs | /contact/ |
+| fr | numéros IFU et RCCM, si l’activité est déclarée | /mentions-legales/ |
 | en | level | /en/about/ |
 | en | dates, employers or clients for this experience | /en/about/ |
-| en | year | /en/about/, /en/portfolio/la-mine-d-or-des-entrepreneurs/, /en/portfolio/bognon-market/ |
+| en | year | /en/about/, /en/portfolio/la-mine-d-or-des-entrepreneurs/ |
 | en | confirm or remove the “Licence in computer research” quoted on the old website but missing from the CV | /en/about/ |
-| en | description of BOGNON MARKET, mentioned on your old portfolio but not in the CV | /en/portfolio/, /en/portfolio/bognon-market/ |
 | en | add your real client projects: name, context, year, technologies, link, screenshots and client consent | /en/portfolio/ |
 | en | digital, print or both | /en/portfolio/la-mine-d-or-des-entrepreneurs/ |
-| en | goal, audience, achievements and verifiable results | /en/portfolio/bognon-market/ |
-| en | your role (founder?) | /en/portfolio/bognon-market/ |
-| en | LinkedIn, GitHub, Facebook… links to add in src/content/site.mjs | /en/contact/ |
 | en | state whether you reply in English | /en/contact/ |
-| en | IFU tax number, if the business is registered | /en/legal-notice/ |
-| en | RCCM number, if the business is registered | /en/legal-notice/ |
+| en | LinkedIn, GitHub, Facebook… links to add in src/content/site.mjs | /en/contact/ |
+| en | IFU and RCCM numbers, if the business is registered | /en/legal-notice/ |

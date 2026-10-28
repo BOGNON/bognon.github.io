@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Blog de BOGNON ISAAC</title>
+  <link>https://bognon.github.io/blog/</link>
+  <atom:link href="https://bognon.github.io/blog/feed.xml" rel="self" type="application/rss+xml"/>
+  <description>Actualités professionnelles de BOGNON ISAAC, développeur web et entrepreneur.</description>
+  <language>fr</language>
+  <item>
+    <title>Lancement de mon portfolio</title>
+    <link>https://bognon.github.io/blog/lancement-du-portfolio/</link>
+    <guid>https://bognon.github.io/blog/lancement-du-portfolio/</guid>
+    <pubDate>Wed, 28 Oct 2026 08:00:00 GMT</pubDate>
+    <description>Ce site réunit mon parcours, mes services et mon livre, avec un moyen simple de me demander un devis.</description>
+  </item>
+</channel>
+</rss>

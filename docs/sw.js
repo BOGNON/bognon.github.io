@@ -8,13 +8,13 @@
 //   propose « Actualiser », puis remplace l'ancien et supprime les anciens caches.
 // - les liens externes (WhatsApp, e-mail, GitHub) ne passent jamais par ce cache.
 
-const VERSION = 'f73e10094e';
+const VERSION = '3c7c8e8d6d';
 const PRECACHE = `bi-precache-${VERSION}`;
 const RUNTIME = 'bi-runtime';
 const PRECACHE_URLS = [
  "./",
  "a-propos/",
- "assets/css/styles.css?v=f6e44eb29f",
+ "assets/css/styles.css?v=f6eb97d081",
  "assets/fonts/fraunces.woff2",
  "assets/fonts/inter.woff2",
  "assets/icons/apple-touch-icon.png",
@@ -28,8 +28,9 @@ const PRECACHE_URLS = [
  "assets/img/isaac-bognon-portrait-240.webp",
  "assets/img/isaac-bognon-portrait-480.webp",
  "assets/img/livre-mine-d-or-mockup-642.webp",
- "assets/js/main.js?v=50e50a42ad",
+ "assets/js/main.js?v=17fbb97f49",
  "blog/",
+ "blog/feed.xml",
  "blog/lancement-du-portfolio/",
  "catalogue/",
  "competences/",
@@ -38,12 +39,12 @@ const PRECACHE_URLS = [
  "en/",
  "en/about/",
  "en/blog/",
+ "en/blog/feed.xml",
  "en/blog/lancement-du-portfolio/",
  "en/catalogue/",
  "en/contact/",
  "en/legal-notice/",
  "en/portfolio/",
- "en/portfolio/bognon-market/",
  "en/portfolio/la-mine-d-or-des-entrepreneurs/",
  "en/privacy/",
  "en/services/",
@@ -52,7 +53,6 @@ const PRECACHE_URLS = [
  "mentions-legales/",
  "offline.html",
  "portfolio/",
- "portfolio/bognon-market/",
  "portfolio/la-mine-d-or-des-entrepreneurs/",
  "services/"
 ];

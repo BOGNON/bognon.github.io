@@ -24,6 +24,10 @@
 
   // ------------------------------------------------ Apparition au défilement
   const reveals = document.querySelectorAll('.reveal');
+  // Variantes : médias qui glissent, cartes qui s'agrandissent légèrement.
+  document.querySelectorAll('.feature__media, .about__media').forEach((el) => { el.dataset.reveal = el.dataset.reveal || 'left'; });
+  document.querySelectorAll('.feature__text, .about__text').forEach((el) => { el.dataset.reveal = el.dataset.reveal || 'right'; });
+  document.querySelectorAll('.card.reveal, .project-card.reveal').forEach((el) => { el.dataset.reveal = el.dataset.reveal || 'zoom'; });
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if ('IntersectionObserver' in window && !reduce) {
     doc.classList.add('can-reveal');
@@ -33,6 +37,30 @@
       }
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
     reveals.forEach((el) => io.observe(el));
+  }
+
+  // ------------------------------------------------ Barre de progression et retour en haut
+  const toTop = document.querySelector('[data-to-top]');
+  if (toTop) toTop.hidden = false;
+  let ticking = false;
+  const onScroll = () => {
+    const max = doc.scrollHeight - window.innerHeight;
+    doc.style.setProperty('--progress', max > 0 ? (window.scrollY / max).toFixed(4) : '0');
+    if (toTop) toTop.classList.toggle('is-shown', window.scrollY > 600);
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  onScroll();
+
+  // ------------------------------------------------ Halo des cartes qui suit le pointeur
+  if (!reduce && window.matchMedia('(hover: hover)').matches) {
+    document.addEventListener('pointermove', (e) => {
+      const card = e.target.closest && e.target.closest('.card');
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    }, { passive: true });
   }
 
   // ------------------------------------------------ Filtres du catalogue

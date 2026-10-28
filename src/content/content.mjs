@@ -13,8 +13,8 @@ export const profile = {
     en: 'Web developer & entrepreneur',
   },
   intro: {
-    fr: "Je conçois et je développe des sites vitrines, des boutiques en ligne et des plateformes web, du design de l'interface jusqu'à la mise en ligne. Basé à Porto-Novo, au Bénin, je travaille avec des clients et des partenaires de tous pays.",
-    en: 'I design and build business websites, online shops and web platforms, from interface design to deployment. Based in Porto-Novo, Benin, I work with clients and partners from any country.',
+    fr: "Je conçois et je développe des sites vitrines, des boutiques en ligne et des plateformes web, du design de l'interface jusqu'à la mise en ligne. Basé à Porto-Novo, au Bénin, je suis ouvert aux projets de clients et de partenaires du monde entier.",
+    en: 'I design and build business websites, online shops and web platforms, from interface design to deployment. Based in Porto-Novo, Benin, I welcome projects from clients and partners worldwide.',
   },
   // Texte du CV, section « Profil professionnel ».
   bio: {

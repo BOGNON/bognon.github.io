@@ -159,7 +159,13 @@ function layout(p) {
   const alt = p.alternates; // { fr: path, en: path }
   const title = p.key === 'home' ? p.title : `${p.title} | ${site.brand}`;
   const crumbs = p.crumbs || [];
-  const ld = { '@context': 'https://schema.org', '@graph': [...(p.ld || []), ...(crumbs.length > 1 ? [breadcrumbLd(crumbs)] : [])] };
+  const webPage = {
+    '@type': 'WebPage', '@id': `${abs(here)}#webpage`, url: abs(here), name: title, description: p.description, inLanguage: lang,
+    isPartOf: { '@id': `${SITE_URL}/#website` }, about: { '@id': personId }, dateModified: BUILD_DATE,
+    primaryImageOfPage: abs(p.ogImage || 'assets/img/og-bognon-isaac.jpg'),
+    ...(crumbs.length > 1 ? { breadcrumb: { '@id': `${abs(here)}#breadcrumb` } } : {}),
+  };
+  const ld = { '@context': 'https://schema.org', '@graph': [webPage, ...(p.ld || []), ...(crumbs.length > 1 ? [{ '@id': `${abs(here)}#breadcrumb`, ...breadcrumbLd(crumbs) }] : [])] };
   const navItems = navKeys.map((k) => {
     const cur = p.section === k;
     return `<li><a href="${r(routes[k][lang])}"${cur ? ' aria-current="page"' : ''}>${t.nav[k]}</a></li>`;
@@ -196,6 +202,7 @@ ${site.verification.bing ? `<meta name="msvalidate.01" content="${esc(site.verif
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="${site.themeColor}">
 <link rel="manifest" href="${r('manifest.webmanifest')}">
+<link rel="alternate" type="application/rss+xml" title="${lang === 'fr' ? 'Blog de BOGNON ISAAC' : 'BOGNON ISAAC blog'}" href="${r(routes.blog[lang] + 'feed.xml')}">
 <link rel="icon" href="${r('assets/icons/favicon.svg')}" type="image/svg+xml">
 <link rel="icon" href="${r('assets/icons/favicon-48.png')}" sizes="48x48" type="image/png">
 <link rel="apple-touch-icon" href="${r('assets/icons/apple-touch-icon.png')}">
@@ -208,6 +215,7 @@ ${ld['@graph'].length ? `<script type="application/ld+json">${JSON.stringify(ld)
 </head>
 <body class="page-${p.key}">
 <a class="skip-link" href="#contenu">${t.skip}</a>
+<div class="scroll-progress" aria-hidden="true"></div>
 <header class="site-header">
   <div class="container site-header__inner">
     <a class="brand" href="${r(routes.home[lang])}">
@@ -256,6 +264,7 @@ ${p.body}
     <p>© <span data-year>${BUILD_DATE.slice(0, 4)}</span> ${site.brand}. ${t.rights}</p>
     <p>${t.footerTech}</p>
   </div>
+  <a class="to-top" href="#contenu" data-to-top hidden><span class="sr-only">${lang === 'fr' ? 'Haut de page' : 'Back to top'}</span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 19V5m-6 6 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 </footer>
 <div class="toast" role="status" aria-live="polite" hidden data-toast>
   <p data-toast-text></p>
@@ -268,6 +277,9 @@ ${p.body}
 }
 
 // ---------------------------------------------------------------- blocs réutilisables
+// Fond animé (dégradés en mouvement), purement décoratif.
+const aurora = '<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>';
+
 const sectionHead = (num, kicker, title, intro = '') => `
 <div class="section-head reveal">
   <p class="kicker"><span class="kicker__num">${num}</span>${kicker}</p>
@@ -277,12 +289,14 @@ const sectionHead = (num, kicker, title, intro = '') => `
 
 const pageHero = (kicker, title, lead) => `
 <section class="page-hero">
+  ${aurora}
   <div class="container">
-    <p class="kicker">${kicker}</p>
-    <h1>${title}</h1>
-    ${lead ? `<p class="lead">${lead}</p>` : ''}
+    <p class="kicker intro-anim" style="--i:0">${kicker}</p>
+    <h1 class="intro-anim" style="--i:1">${title}</h1>
+    ${lead ? `<p class="lead intro-anim" style="--i:2">${lead}</p>` : ''}
   </div>
 </section>`;
+
 
 function ctaBand(lang, from) {
   const t = ui[lang];
@@ -359,7 +373,15 @@ function composeForm(lang, kind) {
 </form>`;
 }
 
+// Paragraphe ou ligne de faits affichés seulement si l'information existe.
+const para = (s, lang, where, cls = '') => { const h = text(s, lang, where); return h ? `<p${cls ? ` class="${cls}"` : ''}>${h}</p>` : ''; };
+const fact = (label, value, lang, where) => { const h = text(value, lang, where); return h ? `<div><dt>${esc(label)}</dt><dd>${h}</dd></div>` : ''; };
+
 const priceLabel = (price, lang) => (price ? esc(pick(price, lang)) : ui[lang].onQuote);
+
+// Projets publiés : ceux dont la description est connue. Les autres sont signalés dans A-COMPLETER.md.
+const shownProjects = projects.filter((p) => !hasTodo(p.summary.fr));
+for (const p of projects.filter((x) => hasTodo(x.summary.fr))) todoLog.push({ where: `portfolio/${p.slug}/ (projet masqué)`, lang: 'fr', what: `informations sur le projet ${p.title}` });
 
 // ---------------------------------------------------------------- pages
 const pages = [];
@@ -387,18 +409,19 @@ for (const lang of LANGS) {
       ],
       body: `
 <section class="hero">
+  ${aurora}
   <div class="container hero__inner">
     <div class="hero__text">
-      <p class="kicker kicker--light">${esc(profile.headline[lang])} · ${t.location}</p>
-      <h1 class="hero__title"><span>Isaac</span> BOGNON</h1>
-      <p class="hero__lead">${text(profile.intro[lang], lang, here)}</p>
-      <div class="btn-row">
+      <p class="kicker kicker--light intro-anim" style="--i:0">${esc(profile.headline[lang])} · ${t.location}</p>
+      <h1 class="hero__title intro-anim" style="--i:1"><span class="text-grad">Isaac</span> BOGNON</h1>
+      <p class="hero__lead intro-anim" style="--i:2">${text(profile.intro[lang], lang, here)}</p>
+      <div class="btn-row intro-anim" style="--i:3">
         <a class="btn btn--primary" href="${rel(here, routes.services[lang])}#devis">${t.quote}</a>
         <a class="btn btn--light" href="${rel(here, routes.portfolio[lang])}">${fr ? 'Voir mes réalisations' : 'See my work'}</a>
       </div>
     </div>
-    <div class="hero__media">
-      <div class="hero__frame">${portrait(lang, here, { eager: true })}</div>
+    <div class="hero__media intro-anim" style="--i:2">
+      <div class="hero__frame"><span class="hero__ring" aria-hidden="true"></span>${portrait(lang, here, { eager: true })}</div>
     </div>
   </div>
 </section>
@@ -409,7 +432,7 @@ for (const lang of LANGS) {
     <div class="card-grid card-grid--3">
       ${top.map((s, i) => `
       <article class="card reveal" style="--d:${i}">
-        <p class="card__num">0${i + 1}</p>
+        <p class="card__num" aria-hidden="true">0${i + 1}</p>
         <h3>${esc(s.title[lang])}</h3>
         <p>${esc(s.text[lang])}</p>
         <a class="link-arrow" href="${rel(here, routes.services[lang])}#${s.slug}">${fr ? 'En savoir plus' : 'Learn more'}<span class="sr-only"> : ${esc(s.title[lang])}</span> ${icon('arrow')}</a>
@@ -438,9 +461,11 @@ for (const lang of LANGS) {
 <section class="section">
   <div class="container">
     ${sectionHead('03', fr ? 'Compétences' : 'Skills', fr ? 'Les outils que j’utilise' : 'The tools I use')}
-    <ul class="tag-cloud reveal">
-      ${skills.flatMap((s) => s.tags).map((tag) => `<li>${esc(pick(tag, lang))}</li>`).join('')}
-    </ul>
+    <div class="marquee reveal">
+      <ul class="marquee__track">
+        ${(() => { const tags = skills.flatMap((s) => s.tags).map((tag) => esc(pick(tag, lang))); return tags.map((x) => `<li>${x}</li>`).join('') + tags.map((x) => `<li aria-hidden="true">${x}</li>`).join(''); })()}
+      </ul>
+    </div>
     <p class="section__more reveal"><a class="link-arrow" href="${rel(here, routes.skills[lang])}">${fr ? 'Voir toutes les compétences' : 'See all skills'} ${icon('arrow')}</a></p>
   </div>
 </section>
@@ -481,7 +506,7 @@ ${pageHero(fr ? 'À propos' : 'About', fr ? 'Isaac BOGNON, développeur web et e
       <p>${text(profile.bioMore[lang], lang, here)}</p>
       <dl class="facts">
         <div><dt>${fr ? 'Basé à' : 'Based in'}</dt><dd>${t.location}</dd></div>
-        <div><dt>${fr ? 'Langues' : 'Languages'}</dt><dd>${profile.languages.map((l) => `${esc(l.name[lang])}${fr ? ' : ' : ': '}${text(l.level[lang], lang, here)}`).join('<br>')}</dd></div>
+        <div><dt>${fr ? 'Langues' : 'Languages'}</dt><dd>${profile.languages.map((l) => [esc(l.name[lang]), text(l.level[lang], lang, here)]).filter(([, lv]) => lv).map(([n, lv]) => `${n}${fr ? ' : ' : ': '}${lv}`).join('<br>')}</dd></div>
       </dl>
       <div class="btn-row">
         <a class="btn btn--primary" href="${rel(here, routes.contact[lang])}">${fr ? 'Me contacter' : 'Contact me'}</a>
@@ -494,7 +519,7 @@ ${pageHero(fr ? 'À propos' : 'About', fr ? 'Isaac BOGNON, développeur web et e
   <div class="container">
     ${sectionHead('01', fr ? 'Expérience' : 'Experience', fr ? 'Ce que je fais au quotidien' : 'What I do day to day')}
     <ul class="check-list reveal">${profile.experience.map((e) => `<li>${esc(e[lang])}</li>`).join('')}</ul>
-    <p class="reveal">${text(profile.experienceNote[lang], lang, here)}</p>
+    ${para(profile.experienceNote[lang], lang, here, 'reveal')}
   </div>
 </section>
 <section class="section">
@@ -506,7 +531,7 @@ ${pageHero(fr ? 'À propos' : 'About', fr ? 'Isaac BOGNON, développeur web et e
     <div>
       ${sectionHead('03', fr ? 'Diplômes' : 'Qualifications', fr ? 'Diplômes obtenus' : 'Qualifications')}
       <ol class="timeline reveal">${timeline(profile.diplomas)}</ol>
-      <p class="reveal">${text(profile.educationNote[lang], lang, here)}</p>
+      ${para(profile.educationNote[lang], lang, here, 'reveal')}
     </div>
   </div>
 </section>
@@ -585,19 +610,15 @@ ${pageHero('Portfolio', fr ? 'Réalisations' : 'Work', fr ? 'Chaque projet a sa 
 <section class="section section--tight">
   <div class="container">
     <div class="card-grid card-grid--3">
-      ${projects.map(card).join('')}
-      <article class="project-card project-card--todo reveal">
-        <div class="project-card__body">
-          <p>${text(fr ? '{{TODO: ajoutez vos projets clients réels : nom, contexte, année, technologies, lien, captures d’écran et accord du client}}' : '{{TODO: add your real client projects: name, context, year, technologies, link, screenshots and client consent}}', lang, here)}</p>
-        </div>
-      </article>
+      ${shownProjects.map(card).join('')}
+${(text(fr ? '{{TODO: ajoutez vos projets clients réels : nom, contexte, année, technologies, lien, captures d’écran et accord du client}}' : '{{TODO: add your real client projects: name, context, year, technologies, link, screenshots and client consent}}', lang, here), '')}
     </div>
   </div>
 </section>
 ${ctaBand(lang, here)}`,
     });
 
-    for (const pr of projects) {
+    for (const pr of shownProjects) {
       const pHere = projectPath(pr.slug, lang);
       const isBook = pr.slug === book.slug;
       const desc = plain(pr.summary[lang]) || (fr ? `Projet ${pr.title} présenté par BOGNON ISAAC.` : `${pr.title}, a project by BOGNON ISAAC.`);
@@ -607,6 +628,7 @@ ${ctaBand(lang, here)}`,
         description: desc.length > 60 ? desc : `${desc} ${fr ? 'Projet présenté par BOGNON ISAAC, développeur web et entrepreneur.' : 'Presented by BOGNON ISAAC, web developer and entrepreneur.'}`,
         crumbs: [crumbHome(lang), { name: t.nav.portfolio, path: here }, { name: pr.title, path: pHere }],
         noindex: [pr.title, ...Object.values(pr.summary)].some(hasTodo) && !isBook,
+        ogImage: isBook ? 'assets/img/og-livre-mine-d-or.jpg' : undefined,
         ld: isBook ? [{
           '@type': 'Book', name: book.title, author: { '@id': personId }, inLanguage: 'fr', url: abs(pHere),
           image: abs(`assets/img/${book.image.name}-${book.image.widths.at(-1)}.${book.image.ext}`), description: book.text[lang],
@@ -617,14 +639,14 @@ ${pageHero(text(pr.category[lang], lang, pHere), esc(pr.title), text(pr.summary[
   <div class="container project">
     <div class="project__main reveal">
       ${pr.image ? `<div class="project__media">${contentImg(pr.image, pr.imageAlt, lang, pHere, { eager: true })}</div>` : ''}
-      ${pr.body[lang].map((b) => `<p>${text(b, lang, pHere)}</p>`).join('')}
+      ${pr.body[lang].map((b) => para(b, lang, pHere)).join('')}
       ${isBook ? `<h2>${fr ? 'Ce que contient le livre' : 'What the book contains'}</h2><ul class="check-list">${book.contents[lang].map((c) => `<li>${esc(c)}</li>`).join('')}</ul>` : ''}
     </div>
     <aside class="project__side reveal">
       <dl class="facts">
-        <div><dt>${fr ? 'Rôle' : 'Role'}</dt><dd>${text(pr.role[lang], lang, pHere)}</dd></div>
-        <div><dt>${fr ? 'Année' : 'Year'}</dt><dd>${text(pick(pr.year, lang), lang, pHere)}</dd></div>
-        ${isBook ? book.details.slice(1).map((d) => `<div><dt>${esc(d.label[lang])}</dt><dd>${text(d.value[lang], lang, pHere)}</dd></div>`).join('') : ''}
+        ${fact(fr ? 'Rôle' : 'Role', pr.role[lang], lang, pHere)}
+        ${fact(fr ? 'Année' : 'Year', pick(pr.year, lang), lang, pHere)}
+        ${isBook ? book.details.slice(1).map((d) => fact(d.label[lang], d.value[lang], lang, pHere)).join('') : ''}
       </dl>
       ${pr.tags.length ? `<ul class="tags">${pr.tags.map((tag) => `<li>${esc(pick(tag, lang))}</li>`).join('')}</ul>` : ''}
       <div class="btn-col">
@@ -795,16 +817,16 @@ ${pageHero('Blog', fr ? 'Actualités' : 'News', fr ? 'Projets en cours, conseils
       crumbs: [crumbHome(lang), { name: t.nav.contact, path: here }],
       ld: [{ '@type': 'ContactPage', url: abs(here), inLanguage: lang, mainEntity: { '@id': personId } }],
       body: `
-${pageHero('Contact', fr ? 'Parlons de votre projet' : 'Let’s talk about your project', fr ? 'Je réponds aux demandes en français. Pour l’anglais : {{TODO: préciser si vous répondez en anglais}}' : 'I answer requests in French. English: {{TODO: state whether you reply in English}}')}
+${pageHero('Contact', fr ? 'Parlons de votre projet' : 'Let’s talk about your project', text(fr ? 'Écrivez-moi pour un devis, une commande ou un partenariat. {{TODO: préciser si vous répondez en anglais}}' : 'Write to me for a quote, an order or a partnership. {{TODO: state whether you reply in English}}', lang, routes.contact[lang]))}
 <section class="section section--tight">
   <div class="container contact">
     <div class="contact__channels reveal">
       ${hasMail ? `<a class="channel" href="mailto:${C.email}">${icon('mail')}<span><strong>E-mail</strong>${C.email}</span></a>` : ''}
       ${hasWa ? `<a class="channel" href="${esc(waLink(C.whatsapp, waMsg(lang, fr ? 'je vous contacte depuis votre site.' : 'I am contacting you from your website.')))}" target="_blank" rel="noopener">${icon('wa')}<span><strong>WhatsApp</strong>${C.whatsappDisplay}</span></a>` : ''}
       <p class="channel channel--static">${icon('pin')}<span><strong>${fr ? 'Localisation' : 'Location'}</strong>${t.location}</span></p>
-      <div class="channel channel--static"><span><strong>${fr ? 'Réseaux professionnels' : 'Professional networks'}</strong>
-        ${social.length ? social.map(([k, v]) => `<a href="${esc(v)}" rel="me noopener" target="_blank">${k[0].toUpperCase() + k.slice(1)}</a>`).join(' · ') : text(fr ? '{{TODO: liens LinkedIn, GitHub, Facebook… à ajouter dans src/content/site.mjs}}' : '{{TODO: LinkedIn, GitHub, Facebook… links to add in src/content/site.mjs}}', lang, here)}
-      </span></div>
+      ${social.length ? `<div class="channel channel--static"><span><strong>${fr ? 'Réseaux professionnels' : 'Professional networks'}</strong>
+        ${social.map(([k, v]) => `<a href="${esc(v)}" rel="me noopener" target="_blank">${k[0].toUpperCase() + k.slice(1)}</a>`).join(' · ')}
+      </span></div>` : text(fr ? '{{TODO: liens LinkedIn, GitHub, Facebook… à ajouter dans src/content/site.mjs}}' : '{{TODO: LinkedIn, GitHub, Facebook… links to add in src/content/site.mjs}}', lang, here)}
     </div>
     <div class="contact__form reveal">
       <h2>${fr ? 'Écrire un message' : 'Write a message'}</h2>
@@ -832,8 +854,7 @@ ${pageHero(fr ? 'Informations' : 'Information', t.nav.legal, '')}
     <p>${site.person.fullName}, ${esc(pick(site.person.jobTitle, lang).toLowerCase())}, ${t.location}.<br>
     ${fr ? 'Contact' : 'Contact'} : ${hasMail ? `<a href="mailto:${C.email}">${C.email}</a>` : ''}${hasWa ? ` · WhatsApp ${C.whatsappDisplay}` : ''}<br>
     ${fr ? 'Directeur de la publication' : 'Publication director'} : ${site.person.fullName}.</p>
-    <p>${L.ifu ? `IFU : ${esc(L.ifu)}<br>` : text(fr ? '{{TODO: numéro IFU, si l’activité est déclarée}}' : '{{TODO: IFU tax number, if the business is registered}}', lang, here) + '<br>'}
-    ${L.rccm ? `RCCM : ${esc(L.rccm)}` : text(fr ? '{{TODO: numéro RCCM, si l’activité est immatriculée}}' : '{{TODO: RCCM number, if the business is registered}}', lang, here)}</p>
+    ${L.ifu || L.rccm ? `<p>${L.ifu ? `IFU : ${esc(L.ifu)}` : ''}${L.ifu && L.rccm ? '<br>' : ''}${L.rccm ? `RCCM : ${esc(L.rccm)}` : ''}</p>` : text(fr ? '{{TODO: numéros IFU et RCCM, si l’activité est déclarée}}' : '{{TODO: IFU and RCCM numbers, if the business is registered}}', lang, here)}
     <h2>${fr ? 'Hébergeur' : 'Host'}</h2>
     <p>GitHub, Inc. (GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, ${fr ? 'États-Unis' : 'United States'}. <a href="https://docs.github.com/${lang}/site-policy" rel="noopener" target="_blank">${fr ? 'Conditions de GitHub' : 'GitHub terms'}</a>.</p>
     <h2>${fr ? 'Propriété intellectuelle' : 'Intellectual property'}</h2>
@@ -997,6 +1018,30 @@ ${p.alternates ? `    <xhtml:link rel="alternate" hreflang="fr" href="${abs(p.al
 ` : ''}  </url>`).join('\n')}
 </urlset>
 `);
+
+// Flux RSS du blog (un par langue)
+for (const lang of LANGS) {
+  const fr = lang === 'fr';
+  const xmlEsc = (x) => esc(x).replace(/'/g, '&apos;');
+  fs.writeFileSync(path.join(OUT, routes.blog[lang], 'feed.xml'), `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>${fr ? 'Blog de BOGNON ISAAC' : 'BOGNON ISAAC blog'}</title>
+  <link>${abs(routes.blog[lang])}</link>
+  <atom:link href="${abs(routes.blog[lang] + 'feed.xml')}" rel="self" type="application/rss+xml"/>
+  <description>${fr ? 'Actualités professionnelles de BOGNON ISAAC, développeur web et entrepreneur.' : 'Professional news from BOGNON ISAAC, web developer and entrepreneur.'}</description>
+  <language>${lang}</language>
+${posts.map((po) => `  <item>
+    <title>${xmlEsc(po.title[lang])}</title>
+    <link>${abs(postPath(po.slug, lang))}</link>
+    <guid>${abs(postPath(po.slug, lang))}</guid>
+    <pubDate>${new Date(po.date + 'T08:00:00Z').toUTCString()}</pubDate>
+    <description>${xmlEsc(po.excerpt[lang])}</description>
+  </item>`).join('\n')}
+</channel>
+</rss>
+`);
+}
 
 // GitHub Pages : pas de traitement Jekyll, domaine personnalisé facultatif.
 fs.writeFileSync(path.join(OUT, '.nojekyll'), '');

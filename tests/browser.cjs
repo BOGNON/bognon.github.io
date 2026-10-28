@@ -39,7 +39,7 @@ async function main() {
 
   const sitemap = fs.readFileSync(path.join(OUT_DIR, 'sitemap.xml'), 'utf8');
   const pages = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-  const noindex = ['portfolio/bognon-market/', 'en/portfolio/bognon-market/'].map((p) => SITE + p);
+  const noindex = [];
   const all = [...pages, ...noindex];
   const axeSource = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
   const browser = await chromium.launch();

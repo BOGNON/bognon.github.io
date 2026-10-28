@@ -9,14 +9,15 @@ export const hasTodo = (s) => typeof s === 'string' && /\{\{TODO:/.test(s);
 // Liste des champs « À COMPLÉTER » rencontrés pendant le build.
 export const todoLog = [];
 
-// Texte -> HTML échappé, avec les {{TODO: ...}} rendus en encadré visible.
+// Texte -> HTML échappé. Les {{TODO: ...}} ne sont jamais affichés : ils sont retirés
+// du site et listés dans A-COMPLETER.md. Une chaîne entièrement « à compléter » devient vide.
 export function text(s, lang, where = '') {
   if (s == null) return '';
-  const label = lang === 'en' ? 'TO COMPLETE' : 'À COMPLÉTER';
-  return esc(s).replace(TODO_RE, (_, what) => {
+  const out = esc(s).replace(TODO_RE, (_, what) => {
     todoLog.push({ where, lang, what: what.trim() });
-    return `<mark class="todo"><span class="todo__label">${label}</span> ${what.trim()}</mark>`;
+    return '';
   });
+  return out.replace(/\s{2,}/g, ' ').trim();
 }
 
 // Texte brut sans les marqueurs (pour les métadonnées).

@@ -27,7 +27,7 @@ year: { fr: '2021', en: '2021' },                         // après
 ```
 
 Pour supprimer une ligne qui ne vous concerne pas (par exemple le permis de conduire), supprimez l'objet entier.
-Une page projet contenant encore un champ à compléter n'est pas proposée à Google (`noindex`).
+Un champ `{{TODO: …}}` n'est jamais affiché sur le site : l'élément est masqué. Un projet dont le résumé est encore à compléter n'est pas publié du tout.
 
 ## Changer les coordonnées
 

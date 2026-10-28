@@ -20,8 +20,10 @@ ouvrent l'e-mail ou WhatsApp avec un message prérempli.
 | Mentions légales, confidentialité | `/mentions-legales/`, `/confidentialite/` | `/en/legal-notice/`, `/en/privacy/` |
 | Hors connexion, page introuvable | `offline.html`, `404.html` | (bilingues) |
 
-Les informations que vous n'avez pas encore fournies apparaissent dans des encadrés jaunes
-**« À COMPLÉTER »**. La liste à jour est dans [A-COMPLETER.md](A-COMPLETER.md), régénérée à chaque build.
+Les informations pas encore fournies (marquées `{{TODO: …}}` dans `src/content/content.mjs`) ne sont jamais
+affichées : l'élément concerné est simplement masqué. La liste à jour est dans [A-COMPLETER.md](A-COMPLETER.md),
+régénérée à chaque build. Les couleurs de marque se changent en haut de `src/assets/css/styles.css`
+(`--brand`, `--brand-light`, `--brand-deep`, `--accent-2`, `--accent-3`).
 
 ## Lancer le site sur votre ordinateur
 
