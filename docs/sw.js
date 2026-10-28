@@ -8,7 +8,7 @@
 //   propose « Actualiser », puis remplace l'ancien et supprime les anciens caches.
 // - les liens externes (WhatsApp, e-mail, GitHub) ne passent jamais par ce cache.
 
-const VERSION = '15ed775595';
+const VERSION = '00b9ee2349';
 const PRECACHE = `bi-precache-${VERSION}`;
 const RUNTIME = 'bi-runtime';
 const PRECACHE_URLS = [

@@ -948,8 +948,6 @@ ${pageHero(fr ? 'Informations' : 'Information', t.nav.legal, '')}
     ${fr ? 'Contact' : 'Contact'} : ${hasMail ? `<a href="mailto:${C.email}">${C.email}</a>` : ''}${hasWa ? ` · WhatsApp ${C.whatsappDisplay}` : ''}<br>
     ${fr ? 'Directeur de la publication' : 'Publication director'} : ${site.person.fullName}.</p>
     ${L.ifu || L.rccm ? `<p>${L.ifu ? `IFU : ${esc(L.ifu)}` : ''}${L.ifu && L.rccm ? '<br>' : ''}${L.rccm ? `RCCM : ${esc(L.rccm)}` : ''}</p>` : text(fr ? '{{TODO: numéros IFU et RCCM, si l’activité est déclarée}}' : '{{TODO: IFU and RCCM numbers, if the business is registered}}', lang, here)}
-    <h2>${fr ? 'Hébergeur' : 'Host'}</h2>
-    <p>GitHub, Inc. (GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, ${fr ? 'États-Unis' : 'United States'}. <a href="https://docs.github.com/${lang}/site-policy" rel="noopener" target="_blank">${fr ? 'Conditions de GitHub' : 'GitHub terms'}</a>.</p>
     <h2>${fr ? 'Propriété intellectuelle' : 'Intellectual property'}</h2>
     <p>${fr
       ? 'Les textes, photographies, le livre « La Mine d’Or des Entrepreneurs » et les visuels de ce site appartiennent à Isaac BOGNON, sauf mention contraire. Toute reproduction sans autorisation écrite est interdite. Les polices Fraunces et Inter sont utilisées sous licence SIL Open Font License 1.1.'
@@ -989,8 +987,8 @@ ${pageHero(fr ? 'Informations' : 'Information', fr ? 'Politique de confidentiali
     <p>Ces échanges passent par les services que vous utilisez (votre fournisseur de messagerie, Apple iCloud pour ma boîte de réception, WhatsApp pour les messages), qui appliquent leurs propres politiques de confidentialité.</p>
     <h2>Durée de conservation</h2>
     <p>Je conserve vos messages le temps nécessaire au traitement de votre demande et au suivi d’une éventuelle prestation, puis je les supprime sur simple demande.</p>
-    <h2>Hébergement et journaux techniques</h2>
-    <p>Le site est hébergé par GitHub Pages. Comme tout hébergeur, GitHub peut enregistrer l’adresse IP des visiteurs à des fins de sécurité. Voir la <a href="https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener" target="_blank">déclaration de confidentialité de GitHub</a>.</p>
+    <h2>Journaux techniques</h2>
+    <p>Comme pour tout site web, le serveur qui délivre les pages peut enregistrer l’adresse IP des visiteurs à des fins de sécurité.</p>
     <h2>Fonctionnement hors connexion</h2>
     <p>Pour permettre la consultation hors connexion, votre navigateur garde une copie des pages et des images du site dans son stockage local. Ces fichiers restent sur votre appareil et ne contiennent aucune donnée personnelle. Vous pouvez les effacer depuis les réglages de votre navigateur.</p>
     <h2>Vos droits</h2>
@@ -1005,8 +1003,8 @@ ${pageHero(fr ? 'Informations' : 'Information', fr ? 'Politique de confidentiali
     <p>These exchanges go through the services you use (your email provider, Apple iCloud for my inbox, WhatsApp for messages), which apply their own privacy policies.</p>
     <h2>Retention</h2>
     <p>I keep your messages for as long as needed to handle your request and follow up on any work, and delete them on request.</p>
-    <h2>Hosting and technical logs</h2>
-    <p>The site is hosted on GitHub Pages. Like any host, GitHub may log visitors’ IP addresses for security purposes. See the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener" target="_blank">GitHub privacy statement</a>.</p>
+    <h2>Technical logs</h2>
+    <p>As with any website, the server delivering the pages may log visitors’ IP addresses for security purposes.</p>
     <h2>Offline use</h2>
     <p>To let you read the site offline, your browser keeps a copy of its pages and images in local storage. These files stay on your device and contain no personal data. You can clear them from your browser settings.</p>
     <h2>Your rights</h2>
