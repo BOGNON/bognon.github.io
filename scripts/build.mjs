@@ -44,7 +44,7 @@ const ui = {
     onQuote: 'Sur devis', quote: 'Demander un devis', orderWa: 'Commander sur WhatsApp', orderMail: 'Commander par e-mail',
     askWa: 'Écrire sur WhatsApp', askMail: 'Écrire par e-mail', details: 'Voir le détail', readMore: 'Lire l’article',
     breadcrumb: "Fil d'Ariane", footerTag: 'Développeur web & entrepreneur à Porto-Novo, Bénin.',
-    footerTech: 'Site statique hébergé gratuitement sur GitHub Pages. Consultable hors connexion après une première visite.',
+    footerTech: 'Site rapide et sécurisé (HTTPS), consultable hors connexion et installable comme une application.',
     rights: 'Tous droits réservés.', navTitle: 'Navigation', contactTitle: 'Contact', legalTitle: 'Informations',
     location: 'Porto-Novo, Bénin', updateReady: 'Une nouvelle version du site est disponible.', reload: 'Actualiser',
     offlineNow: 'Vous êtes hors connexion. Les pages déjà visitées restent consultables.',
@@ -58,7 +58,7 @@ const ui = {
     onQuote: 'On quotation', quote: 'Request a quote', orderWa: 'Order on WhatsApp', orderMail: 'Order by email',
     askWa: 'Message on WhatsApp', askMail: 'Send an email', details: 'View details', readMore: 'Read the post',
     breadcrumb: 'Breadcrumb', footerTag: 'Web developer & entrepreneur in Porto-Novo, Benin.',
-    footerTech: 'Static website hosted for free on GitHub Pages. Readable offline after a first visit.',
+    footerTech: 'Fast, secure (HTTPS) website, readable offline and installable as an app.',
     rights: 'All rights reserved.', navTitle: 'Navigation', contactTitle: 'Contact', legalTitle: 'Information',
     location: 'Porto-Novo, Benin', updateReady: 'A new version of this site is available.', reload: 'Refresh',
     offlineNow: 'You are offline. Pages you already visited are still available.',
@@ -144,17 +144,45 @@ const orgLd = () => ({
 function personLd(lang) {
   const sameAs = Object.entries(site.social).filter(([k, v]) => v && k !== 'discord').map(([, v]) => v);
   return {
-    '@type': 'Person', '@id': personId, name: site.person.fullName, alternateName: site.brand,
+    '@type': 'Person', '@id': personId, name: site.person.fullName, alternateName: [site.brand, 'Bognon Isaac', 'Isaac Bognon'],
+    description: plain(profile.bio[lang]),
+    hasOccupation: { '@type': 'Occupation', name: site.person.jobTitle[lang], occupationLocation: { '@type': 'City', name: site.person.city } },
+    homeLocation: { '@type': 'Place', name: `${site.person.city}, ${site.person.country[lang]}` },
     givenName: site.person.givenName, familyName: site.person.familyName,
     jobTitle: site.person.jobTitle[lang], url: abs(routes.home[lang]),
     image: abs('assets/img/isaac-bognon-portrait-480.jpg'),
     ...(hasMail ? { email: `mailto:${C.email}` } : {}),
     address: { '@type': 'PostalAddress', addressLocality: site.person.city, addressCountry: site.person.countryCode },
     knowsLanguage: ['fr', 'guw'],
-    knowsAbout: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL', lang === 'fr' ? 'Développement web' : 'Web development', lang === 'fr' ? 'Graphisme' : 'Graphic design', lang === 'fr' ? 'Entrepreneuriat' : 'Entrepreneurship'],
+    knowsAbout: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL', 'SEO', 'Canva', 'Photoshop', 'Illustrator', lang === 'fr' ? 'Intelligence artificielle' : 'Artificial intelligence', lang === 'fr' ? 'Création de sites web' : 'Website creation', lang === 'fr' ? 'E-commerce' : 'E-commerce', lang === 'fr' ? 'Développement web' : 'Web development', lang === 'fr' ? 'Graphisme' : 'Graphic design', lang === 'fr' ? 'Entrepreneuriat' : 'Entrepreneurship'],
     ...(CO ? { worksFor: { '@id': orgId } } : {}),
     ...(sameAs.length ? { sameAs } : {}),
   };
+}
+// Questions-réponses factuelles sur Isaac BOGNON (page À propos) : utiles aux moteurs de recherche et aux assistants IA.
+function whoIs(lang) {
+  const fr = lang === 'fr';
+  const net = socialLinks().filter(([k]) => k !== 'Discord').map(([k]) => k).join(', ');
+  return [
+    [fr ? 'Qui est Isaac BOGNON ?' : 'Who is Isaac BOGNON?',
+      fr ? `Isaac BOGNON (BOGNON ISAAC) est un développeur web et chef d’entreprise basé à Porto-Novo, au Bénin, fondateur de ${CO.name} en ${CO.foundingDate}. Isaac conçoit des sites vitrines, des boutiques en ligne et des plateformes web.`
+        : `Isaac BOGNON (BOGNON ISAAC) is a web developer and business owner based in Porto-Novo, Benin, who founded ${CO.name} in ${CO.foundingDate}. Isaac builds business websites, online shops and web platforms.`],
+    [fr ? 'Que propose Isaac BOGNON ?' : 'What does Isaac BOGNON offer?',
+      fr ? `Création de sites web et de boutiques en ligne, applications web, maintenance, mise en ligne, création graphique, automatisation avec l’IA et formation au numérique. Chaque projet fait l’objet d’un devis gratuit.`
+        : `Websites and online shops, web applications, maintenance, deployment, graphic design, AI automation and digital skills training. Every project starts with a free quote.`],
+    [fr ? 'Quelles sont les compétences techniques d’Isaac BOGNON ?' : 'What are Isaac BOGNON’s technical skills?',
+      fr ? 'HTML, CSS, JavaScript, PHP et MySQL pour le développement web ; Canva, Photoshop et Illustrator pour le graphisme ; intégration d’outils d’intelligence artificielle, hébergement, déploiement et tests.'
+        : 'HTML, CSS, JavaScript, PHP and MySQL for web development; Canva, Photoshop and Illustrator for design; AI tool integration, hosting, deployment and testing.'],
+    [fr ? `Qu’est-ce que ${CO.name} ?` : `What is ${CO.name}?`,
+      fr ? `${CO.name} est l’entreprise fondée par Isaac BOGNON en ${CO.foundingDate}. Site officiel : ${CO.url.replace('https://', '')}.`
+        : `${CO.name} is the company Isaac BOGNON founded in ${CO.foundingDate}. Official website: ${CO.url.replace('https://', '')}.`],
+    [fr ? 'Quel livre a écrit Isaac BOGNON ?' : 'What book has Isaac BOGNON written?',
+      fr ? `« ${book.title} », un recueil d’idées d’affaires adaptées au marché africain, écrit pour guider et motiver les jeunes entrepreneurs.`
+        : `“${book.title}” (The Entrepreneurs’ Gold Mine), a collection of business ideas suited to the African market, written to guide and motivate young entrepreneurs.`],
+    [fr ? 'Comment contacter Isaac BOGNON ?' : 'How can I contact Isaac BOGNON?',
+      fr ? `Par e-mail à ${C.email}, sur WhatsApp au ${C.whatsappDisplay}, ou sur les réseaux sociaux : ${net}.`
+        : `By email at ${C.email}, on WhatsApp at ${C.whatsappDisplay}, or on social media: ${net}.`],
+  ];
 }
 const breadcrumbLd = (items) => ({
   '@type': 'BreadcrumbList',
@@ -427,6 +455,7 @@ for (const lang of LANGS) {
     <div class="hero__text">
       <p class="kicker kicker--light intro-anim" style="--i:0">${esc(profile.headline[lang])} · ${t.location}</p>
       <h1 class="hero__title intro-anim" style="--i:1"><span class="text-grad">Isaac</span> BOGNON</h1>
+      <p class="hero__roles intro-anim" style="--i:2"><span class="sr-only">${profile.roles[lang].join(', ')}</span><span class="roles" aria-hidden="true" data-roles="${esc(JSON.stringify(profile.roles[lang]))}">${esc(profile.roles[lang][0])}</span></p>
       ${CO ? `<p class="hero__company intro-anim" style="--i:2"><img src="${rel(here, 'assets/img/logo-lecodetech-96.webp')}" width="28" height="28" alt="">${fr ? 'Fondateur de' : 'Founder of'} <a href="${CO.url}" target="_blank" rel="noopener">${CO.name}</a></p>` : ''}
       <p class="hero__lead intro-anim" style="--i:2">${text(profile.intro[lang], lang, here)}</p>
       <div class="btn-row intro-anim" style="--i:3">
@@ -438,6 +467,12 @@ for (const lang of LANGS) {
       <div class="hero__frame"><span class="hero__ring" aria-hidden="true"></span>${portrait(lang, here, { eager: true })}</div>
     </div>
   </div>
+</section>
+
+<section class="figures" aria-label="${fr ? 'Chiffres clés' : 'Key figures'}">
+  <div class="container"><div class="figures__grid">
+    ${[[services.length, fr ? 'services proposés' : 'services offered'], [skills.length, fr ? 'domaines d’expertise' : 'areas of expertise'], [1, fr ? 'livre publié' : 'book published'], [Number(CO ? CO.foundingDate : 2026), CO ? (fr ? `création de ${CO.name}` : `${CO.name} founded`) : '']].filter(([, l]) => l).map(([n, l], i) => `<div class="figure reveal" style="--d:${i}"><p class="figure__num" data-count="${n}">${n}</p><p class="figure__label">${l}</p></div>`).join('')}
+  </div></div>
 </section>
 
 <section class="section">
@@ -525,7 +560,8 @@ ${ctaBand(lang, here)}`,
         : 'Background of Isaac BOGNON, web developer and entrepreneur in Porto-Novo: experience, training, qualifications, languages and interests.',
       crumbs: [crumbHome(lang), { name: t.nav.about, path: here }],
       ogType: 'profile',
-      ld: [{ '@type': 'ProfilePage', url: abs(here), inLanguage: lang, mainEntity: personLd(lang) }],
+      ld: [{ '@type': 'ProfilePage', url: abs(here), inLanguage: lang, mainEntity: personLd(lang) },
+        { '@type': 'FAQPage', '@id': `${abs(here)}#qui`, mainEntity: whoIs(lang).map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }],
       body: `
 ${pageHero(fr ? 'À propos' : 'About', fr ? 'Isaac BOGNON, développeur web et entrepreneur' : 'Isaac BOGNON, web developer and entrepreneur', '')}
 <section class="section section--tight">
@@ -575,6 +611,14 @@ ${pageHero(fr ? 'À propos' : 'About', fr ? 'Isaac BOGNON, développeur web et e
     <ul class="tag-cloud reveal">${profile.interests.map((i) => `<li>${esc(i[lang])}</li>`).join('')}</ul>
   </div>
 </section>
+<section class="section" id="qui">
+  <div class="container narrow">
+    ${sectionHead('05', fr ? 'En bref' : 'In short', fr ? 'Qui est Isaac BOGNON ?' : 'Who is Isaac BOGNON?')}
+    <div class="faq">
+      ${whoIs(lang).map(([q, a], i) => `<details class="faq__item reveal"${i === 0 ? ' open' : ''}><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}
+    </div>
+  </div>
+</section>
 ${ctaBand(lang, here)}`,
     });
   }
@@ -598,6 +642,7 @@ ${pageHero(fr ? 'Compétences' : 'Skills', fr ? 'Compétences et domaines d’ex
       <article class="card reveal" style="--d:${i % 3}" id="${s.id}">
         <h2 class="card__title">${esc(s.title[lang])}</h2>
         <p>${esc(s.text[lang])}</p>
+        ${s.benefit ? `<p class="benefit"><strong>${fr ? 'Pour vous' : 'For you'}</strong> ${esc(s.benefit[lang])}</p>` : ''}
         <ul class="tags">${s.tags.map((tag) => `<li>${esc(pick(tag, lang))}</li>`).join('')}</ul>
       </article>`).join('')}
     </div>
@@ -874,7 +919,7 @@ ${pageHero('Contact', fr ? 'Parlons de votre projet' : 'Let’s talk about your 
       <p class="channel channel--static">${icon('pin')}<span><strong>${fr ? 'Localisation' : 'Location'}</strong>${t.location}</span></p>
       ${social.length ? `<div class="channel channel--static"><div><strong>${fr ? 'Réseaux sociaux' : 'Social media'}</strong>
         <ul class="socials socials--dark">${social.map(([k, v]) => `<li><a href="${esc(v)}" rel="me noopener" target="_blank">${k}</a></li>`).join('')}</ul>
-      </div></div>` : text(fr ? '{{TODO: liens LinkedIn, GitHub, Facebook… à ajouter dans src/content/site.mjs}}' : '{{TODO: LinkedIn, GitHub, Facebook… links to add in src/content/site.mjs}}', lang, here)}
+      </div></div>` : text(fr ? '{{TODO: liens des réseaux sociaux à ajouter dans src/content/site.mjs}}' : '{{TODO: social media links to add in src/content/site.mjs}}', lang, here)}
     </div>
     <div class="contact__form reveal">
       <h2>${fr ? 'Écrire un message' : 'Write a message'}</h2>
@@ -1052,6 +1097,34 @@ fs.writeFileSync(path.join(OUT, 'manifest.webmanifest'), JSON.stringify({
     { name: 'English version', short_name: 'English', url: './en/' },
   ],
 }, null, 2));
+
+// llms.txt : résumé lisible par les assistants IA (proposition llmstxt.org).
+fs.writeFileSync(path.join(OUT, 'llms.txt'), `# ${site.person.fullName} (${site.brand})
+
+> ${plain(profile.bio.fr)} ${plain(profile.intro.fr)}
+
+- Nom : ${site.person.fullName}, aussi écrit ${site.brand}
+- Métier : ${site.person.jobTitle.fr} ; chef d'entreprise, fondateur de ${CO.name} (${CO.foundingDate}, ${CO.url})
+- Lieu : ${site.person.city}, ${site.person.country.fr}
+- Compétences : ${skills.map((x) => `${x.title.fr} (${x.tags.map((g) => pick(g, 'fr')).join(', ')})`).join(' ; ')}
+- Livre : « ${book.title} », ${plain(book.subtitle.fr)}
+- Contact : ${C.email} ; WhatsApp ${C.whatsappDisplay}
+- Réseaux : ${socialLinks().map(([k, v]) => `${k} ${v}`).join(' ; ')}
+
+## Pages principales
+
+- [À propos](${abs(routes.about.fr)}) : parcours, formations, diplômes
+- [Compétences](${abs(routes.skills.fr)})
+- [Services et devis](${abs(routes.services.fr)})
+- [Portfolio](${abs(routes.portfolio.fr)})
+- [Catalogue](${abs(routes.catalogue.fr)})
+- [Blog](${abs(routes.blog.fr)})
+- [Contact](${abs(routes.contact.fr)})
+
+## English
+
+- [Home](${abs(routes.home.en)}) · [About](${abs(routes.about.en)}) · [Skills](${abs(routes.skills.en)}) · [Services](${abs(routes.services.en)}) · [Contact](${abs(routes.contact.en)})
+`);
 
 // robots.txt et sitemap.xml
 fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);

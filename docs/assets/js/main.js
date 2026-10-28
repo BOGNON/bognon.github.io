@@ -52,6 +52,46 @@
   window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   onScroll();
 
+  // ------------------------------------------------ Rôles qui s'écrivent dans le titre de l'accueil
+  const roles = document.querySelector('[data-roles]');
+  if (roles && !reduce) {
+    let list = [];
+    try { list = JSON.parse(roles.dataset.roles); } catch (e) { /* liste invalide : texte statique */ }
+    let idx = 0;
+    const type = (word, i = 0) => {
+      roles.textContent = word.slice(0, i);
+      if (i < word.length) return setTimeout(() => type(word, i + 1), 55);
+      setTimeout(() => erase(word, word.length), 1900);
+    };
+    const erase = (word, i) => {
+      roles.textContent = word.slice(0, i);
+      if (i > 0) return setTimeout(() => erase(word, i - 1), 28);
+      idx = (idx + 1) % list.length;
+      setTimeout(() => type(list[idx]), 250);
+    };
+    if (list.length > 1) { roles.classList.add('is-typing'); setTimeout(() => erase(list[0], list[0].length), 2200); }
+  }
+
+  // ------------------------------------------------ Chiffres clés qui défilent jusqu'à leur valeur
+  const counters = document.querySelectorAll('[data-count]');
+  if (counters.length && 'IntersectionObserver' in window && !reduce) {
+    const run = (el) => {
+      const end = Number(el.dataset.count);
+      const start = end > 1000 ? end - 40 : 0;
+      const t0 = performance.now();
+      const step = (now) => {
+        const k = Math.min(1, (now - t0) / 1400);
+        el.textContent = String(Math.round(start + (end - start) * (1 - Math.pow(1 - k, 3))));
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const co = new IntersectionObserver((entries) => {
+      for (const entry of entries) if (entry.isIntersecting) { run(entry.target); co.unobserve(entry.target); }
+    }, { threshold: 0.6 });
+    counters.forEach((el) => co.observe(el));
+  }
+
   // ------------------------------------------------ Halo des cartes qui suit le pointeur
   if (!reduce && window.matchMedia('(hover: hover)').matches) {
     document.addEventListener('pointermove', (e) => {

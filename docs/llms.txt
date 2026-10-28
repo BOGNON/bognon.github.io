@@ -1,0 +1,25 @@
+# Isaac BOGNON (BOGNON ISAAC)
+
+> Chef d'entreprise et fondateur de LeCodeTech, développeur web passionné par la technologie, le design et l'entrepreneuriat, je mets ma créativité et mes compétences au service de projets innovants. Je conçois et je développe des sites vitrines, des boutiques en ligne et des plateformes web, du design de l'interface jusqu'à la mise en ligne. Basé à Porto-Novo, au Bénin, je suis ouvert aux projets de clients et de partenaires du monde entier.
+
+- Nom : Isaac BOGNON, aussi écrit BOGNON ISAAC
+- Métier : Développeur web & entrepreneur ; chef d'entreprise, fondateur de LeCodeTech (2026, https://lecodetech.com)
+- Lieu : Porto-Novo, Bénin
+- Compétences : Développement web (HTML, CSS, JavaScript, PHP) ; Bases de données (MySQL) ; Graphisme (Canva, Photoshop, Illustrator) ; IA appliquée aux affaires (Modèles, Automatisation, Intégration) ; Mise en ligne et qualité (Hébergement, Domaines, Tests, Performance) ; Trading & cryptomonnaies (Analyse, Portefeuilles, Stratégies)
+- Livre : « La Mine d'Or des Entrepreneurs », Idées d'affaires adaptées au marché africain
+- Contact : isaacbognon@icloud.com ; WhatsApp +229 52 39 04 36
+- Réseaux : LinkedIn https://www.linkedin.com/in/isaac-bognon-2165aa252 ; Facebook https://www.facebook.com/Bognonisaac ; Instagram https://www.instagram.com/isaac.bognon ; TikTok https://www.tiktok.com/@isaac.bognon ; X (Twitter) https://x.com/b23x100 ; Snapchat https://snapchat.com/t/spnZBRDG ; Discord https://discord.gg/j5jBrZGf
+
+## Pages principales
+
+- [À propos](https://bognon.github.io/a-propos/) : parcours, formations, diplômes
+- [Compétences](https://bognon.github.io/competences/)
+- [Services et devis](https://bognon.github.io/services/)
+- [Portfolio](https://bognon.github.io/portfolio/)
+- [Catalogue](https://bognon.github.io/catalogue/)
+- [Blog](https://bognon.github.io/blog/)
+- [Contact](https://bognon.github.io/contact/)
+
+## English
+
+- [Home](https://bognon.github.io/en/) · [About](https://bognon.github.io/en/about/) · [Skills](https://bognon.github.io/en/skills/) · [Services](https://bognon.github.io/en/services/) · [Contact](https://bognon.github.io/en/contact/)

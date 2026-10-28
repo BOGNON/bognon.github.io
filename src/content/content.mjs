@@ -12,14 +12,19 @@ export const profile = {
     fr: 'Développeur web & entrepreneur',
     en: 'Web developer & entrepreneur',
   },
+  // Rôles affichés en alternance dans le titre de l'accueil.
+  roles: {
+    fr: ['Développeur web', "Chef d'entreprise", 'Fondateur de LeCodeTech', 'Auteur', 'Graphiste'],
+    en: ['Web developer', 'Business owner', 'Founder of LeCodeTech', 'Author', 'Graphic designer'],
+  },
   intro: {
     fr: "Je conçois et je développe des sites vitrines, des boutiques en ligne et des plateformes web, du design de l'interface jusqu'à la mise en ligne. Basé à Porto-Novo, au Bénin, je suis ouvert aux projets de clients et de partenaires du monde entier.",
     en: 'I design and build business websites, online shops and web platforms, from interface design to deployment. Based in Porto-Novo, Benin, I welcome projects from clients and partners worldwide.',
   },
   // Texte du CV, section « Profil professionnel ».
   bio: {
-    fr: "Père de famille, développeur web passionné par la technologie, le design et l'entrepreneuriat, je mets ma créativité et mes compétences au service de projets innovants.",
-    en: 'A family man and a web developer with a passion for technology, design and entrepreneurship, I put my creativity and skills to work for innovative projects.',
+    fr: "Chef d'entreprise et fondateur de LeCodeTech, développeur web passionné par la technologie, le design et l'entrepreneuriat, je mets ma créativité et mes compétences au service de projets innovants.",
+    en: 'A business owner, founder of LeCodeTech and web developer with a passion for technology, design and entrepreneurship, I put my creativity and skills to work for innovative projects.',
   },
   bioMore: {
     fr: "Je suis aussi l'auteur du livre « La Mine d'Or des Entrepreneurs », un ouvrage d'idées d'affaires adaptées au marché africain, écrit pour guider et motiver les jeunes entrepreneurs.",
@@ -73,36 +78,42 @@ export const skills = [
     id: 'web',
     title: { fr: 'Développement web', en: 'Web development' },
     text: { fr: 'Sites et applications web, de l’intégration de l’interface à la logique serveur.', en: 'Websites and web applications, from interface integration to server logic.' },
+    benefit: { fr: 'Des sites rapides, sécurisés et faciles à faire évoluer, construits avec des technologies éprouvées.', en: 'Fast, secure websites that are easy to grow, built with proven technologies.' },
     tags: ['HTML', 'CSS', 'JavaScript', 'PHP'],
   },
   {
     id: 'data',
     title: { fr: 'Bases de données', en: 'Databases' },
     text: { fr: 'Conception de bases, écriture et optimisation de requêtes.', en: 'Database design, query writing and optimisation.' },
+    benefit: { fr: 'Des données bien organisées : vos produits, clients et commandes restent fiables et faciles à retrouver.', en: 'Well-organised data: your products, customers and orders stay reliable and easy to find.' },
     tags: ['MySQL'],
   },
   {
     id: 'design',
     title: { fr: 'Graphisme', en: 'Graphic design' },
     text: { fr: 'Visuels, supports de communication et maquettes d’interface.', en: 'Visuals, marketing materials and interface mock-ups.' },
+    benefit: { fr: 'Une image cohérente sur votre site, vos réseaux sociaux et vos supports imprimés.', en: 'A consistent brand image across your website, social media and printed materials.' },
     tags: ['Canva', 'Photoshop', 'Illustrator'],
   },
   {
     id: 'ai',
     title: { fr: 'IA appliquée aux affaires', en: 'AI for business' },
     text: { fr: 'Modèles d’IA, automatisation de tâches et intégration dans les outils de l’entreprise.', en: 'AI models, task automation and integration into business tools.' },
+    benefit: { fr: 'Moins de tâches répétitives, plus de temps pour vos clients et votre développement.', en: 'Fewer repetitive tasks, more time for your customers and your growth.' },
     tags: [{ fr: 'Modèles', en: 'Models' }, { fr: 'Automatisation', en: 'Automation' }, { fr: 'Intégration', en: 'Integration' }],
   },
   {
     id: 'ops',
     title: { fr: 'Mise en ligne et qualité', en: 'Deployment and quality' },
     text: { fr: 'Hébergement, noms de domaine, déploiement, tests automatisés et performances.', en: 'Hosting, domain names, deployment, automated testing and performance.' },
+    benefit: { fr: 'Un site en ligne, en HTTPS, rapide et vérifié avant chaque mise à jour.', en: 'A site that is live, on HTTPS, fast, and checked before every update.' },
     tags: [{ fr: 'Hébergement', en: 'Hosting' }, { fr: 'Domaines', en: 'Domains' }, { fr: 'Tests', en: 'Testing' }, { fr: 'Performance', en: 'Performance' }],
   },
   {
     id: 'finance',
     title: { fr: 'Trading & cryptomonnaies', en: 'Trading & cryptocurrencies' },
     text: { fr: 'Analyse de marché, gestion de portefeuilles et stratégies de trading.', en: 'Market analysis, portfolio management and trading strategies.' },
+    benefit: { fr: "Une lecture des marchés et des investissements au service de la stratégie d'entreprise.", en: 'An understanding of markets and investment that informs business strategy.' },
     tags: [{ fr: 'Analyse', en: 'Analysis' }, { fr: 'Portefeuilles', en: 'Portfolios' }, { fr: 'Stratégies', en: 'Strategies' }],
   },
 ];
@@ -358,7 +369,7 @@ export const posts = [
   {
     slug: 'vendre-avec-whatsapp-et-un-site-web',
     date: '2026-10-28',
-    title: { fr: 'Vendre avec WhatsApp et un site web, sans paiement en ligne', en: 'Selling with WhatsApp and a website, no online payment' },
+    title: { fr: 'Vendre avec WhatsApp, sans paiement en ligne', en: 'Selling with WhatsApp and a website, no online payment' },
     excerpt: {
       fr: 'Un site web relié à WhatsApp permet de recevoir des commandes et des demandes de devis sans installer de paiement en ligne.',
       en: 'A website linked to WhatsApp lets you receive orders and quote requests without setting up online payment.',
@@ -391,7 +402,7 @@ export const posts = [
   {
     slug: 'etre-trouve-sur-google',
     date: '2026-10-28',
-    title: { fr: '5 bases pour que votre entreprise soit trouvée sur Google', en: '5 basics to get your business found on Google' },
+    title: { fr: '5 bases pour être trouvé sur Google', en: '5 basics to get your business found on Google' },
     excerpt: {
       fr: 'Titres, contenus utiles, vitesse, Search Console et fiche d’établissement : cinq bases du référencement à mettre en place dès le départ.',
       en: 'Titles, useful content, speed, Search Console and a business profile: five SEO basics to put in place from the start.',

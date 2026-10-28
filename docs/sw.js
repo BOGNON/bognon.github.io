@@ -8,13 +8,13 @@
 //   propose « Actualiser », puis remplace l'ancien et supprime les anciens caches.
 // - les liens externes (WhatsApp, e-mail, GitHub) ne passent jamais par ce cache.
 
-const VERSION = '7cee5c7a5a';
+const VERSION = '15ed775595';
 const PRECACHE = `bi-precache-${VERSION}`;
 const RUNTIME = 'bi-runtime';
 const PRECACHE_URLS = [
  "./",
  "a-propos/",
- "assets/css/styles.css?v=1b785e670b",
+ "assets/css/styles.css?v=ae40d4481b",
  "assets/fonts/fraunces.woff2",
  "assets/fonts/inter.woff2",
  "assets/icons/apple-touch-icon.png",
@@ -29,7 +29,7 @@ const PRECACHE_URLS = [
  "assets/img/isaac-bognon-portrait-480.webp",
  "assets/img/livre-mine-d-or-mockup-642.webp",
  "assets/img/logo-lecodetech-96.webp",
- "assets/js/main.js?v=17fbb97f49",
+ "assets/js/main.js?v=ed6ba8168a",
  "blog/",
  "blog/etre-trouve-sur-google/",
  "blog/feed.xml",
@@ -58,6 +58,7 @@ const PRECACHE_URLS = [
  "en/privacy/",
  "en/services/",
  "en/skills/",
+ "llms.txt",
  "manifest.webmanifest",
  "mentions-legales/",
  "offline.html",
