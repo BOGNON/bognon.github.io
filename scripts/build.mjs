@@ -7,7 +7,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { site } from '../src/content/site.mjs';
-import { profile, skills, softSkills, services, book, projects, catalogue, posts } from '../src/content/content.mjs';
+import { profile, skills, softSkills, services, book, projects, catalogue, posts, commitments, faq } from '../src/content/content.mjs';
 import { esc, text, plain, rel, pick, waLink, mailLink, formatDate, todoLog, hasTodo } from './lib.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -483,6 +483,25 @@ for (const lang of LANGS) {
     <p class="section__more reveal"><a class="link-arrow" href="${rel(here, routes.skills[lang])}">${fr ? 'Voir toutes les compétences' : 'See all skills'} ${icon('arrow')}</a></p>
   </div>
 </section>
+
+<section class="section section--alt">
+  <div class="container">
+    ${sectionHead('04', fr ? 'Engagements' : 'Commitments', fr ? 'Ma façon de travailler' : 'How I work')}
+    <div class="card-grid card-grid--4">
+      ${commitments.map((c, i) => `<article class="card reveal" style="--d:${i}"><p class="card__num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</p><h3 class="card__title">${esc(c.title[lang])}</h3><p>${esc(c.text[lang])}</p></article>`).join('')}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    ${sectionHead('05', 'Blog', fr ? 'Conseils et actualités' : 'Advice and news')}
+    <div class="card-grid card-grid--3">
+      ${posts.slice(0, 3).map((po, i) => `<article class="card reveal" style="--d:${i}"><p class="post-item__date"><time datetime="${po.date}">${formatDate(po.date, lang)}</time></p><h3 class="card__title"><a href="${rel(here, postPath(po.slug, lang))}">${esc(po.title[lang])}</a></h3><p>${esc(po.excerpt[lang])}</p></article>`).join('')}
+    </div>
+    <p class="section__more reveal"><a class="link-arrow" href="${rel(here, routes.blog[lang])}">${fr ? 'Tous les articles' : 'All posts'} ${icon('arrow')}</a></p>
+  </div>
+</section>
 ${ctaBand(lang, here)}`,
     });
   }
@@ -741,7 +760,8 @@ ${pageHero(fr ? 'Catalogue' : 'Catalogue', fr ? 'Réalisations et services' : 'W
         ? 'Services de BOGNON ISAAC : site vitrine, boutique en ligne, plateforme web, maintenance, mise en ligne, graphisme, automatisation et formation. Demandez un devis gratuit.'
         : 'Services by BOGNON ISAAC: business websites, online shops, web platforms, maintenance, deployment, graphic design, automation and training. Request a free quote.',
       crumbs: [crumbHome(lang), { name: t.nav.services, path: here }],
-      ld: services.map((s) => ({ '@type': 'Service', name: s.title[lang], description: s.text[lang], provider: { '@id': personId }, url: `${abs(here)}#${s.slug}` })),
+      ld: [...services.map((s) => ({ '@type': 'Service', name: s.title[lang], description: s.text[lang], provider: { '@id': personId }, areaServed: 'Worldwide', url: `${abs(here)}#${s.slug}` })),
+        { '@type': 'FAQPage', '@id': `${abs(here)}#faq`, mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q[lang], acceptedAnswer: { '@type': 'Answer', text: f.a[lang] } })) }],
       body: `
 ${pageHero('Services', fr ? 'Services professionnels' : 'Professional services', fr ? 'Des solutions web sur mesure, pour les entreprises, les indépendants et les porteurs de projet, au Bénin comme à l’international.' : 'Custom web solutions for businesses, freelancers and project owners, in Benin and abroad.')}
 <section class="section section--tight">
@@ -770,6 +790,14 @@ ${pageHero('Services', fr ? 'Services professionnels' : 'Professional services',
   <div class="container narrow">
     ${sectionHead('03', fr ? 'Devis' : 'Quote', fr ? 'Demander un devis' : 'Request a quote', fr ? 'Gratuit et sans engagement. Les champs marqués comme facultatifs peuvent rester vides.' : 'Free and with no commitment. Fields marked optional can be left blank.')}
     ${composeForm(lang, 'quote')}
+  </div>
+</section>
+<section class="section section--alt" id="faq">
+  <div class="container narrow">
+    ${sectionHead('04', 'FAQ', fr ? 'Questions fréquentes' : 'Frequently asked questions')}
+    <div class="faq">
+      ${faq.map((f, i) => `<details class="faq__item reveal"${i === 0 ? ' open' : ''}><summary>${esc(f.q[lang])}</summary><p>${esc(f.a[lang])}</p></details>`).join('')}
+    </div>
   </div>
 </section>`,
     });
@@ -806,13 +834,18 @@ ${pageHero('Blog', fr ? 'Actualités' : 'News', fr ? 'Projets en cours, conseils
         key: 'post', section: 'blog', lang, path: pHere, alternates: { fr: postPath(po.slug, 'fr'), en: postPath(po.slug, 'en') },
         title: po.title[lang], description: po.excerpt[lang], ogType: 'article',
         crumbs: [crumbHome(lang), { name: t.nav.blog, path: here }, { name: po.title[lang], path: pHere }],
-        ld: [{ '@type': 'BlogPosting', headline: po.title[lang], datePublished: po.date, dateModified: po.date, inLanguage: lang, author: { '@id': personId }, mainEntityOfPage: abs(pHere), image: abs('assets/img/og-bognon-isaac.jpg') }],
+        ld: [{ '@type': 'BlogPosting', headline: po.title[lang], description: po.excerpt[lang], wordCount: po.body[lang].join(' ').split(/\s+/).length, publisher: { '@id': personId }, datePublished: po.date, dateModified: po.date, inLanguage: lang, author: { '@id': personId }, mainEntityOfPage: abs(pHere), image: abs('assets/img/og-bognon-isaac.jpg') }],
         body: `
 <article class="article">
   ${pageHero(`<time datetime="${po.date}">${formatDate(po.date, lang)}</time>`, esc(po.title[lang]), esc(po.excerpt[lang]))}
   <div class="section section--tight">
     <div class="container narrow prose">
-      ${po.body[lang].map((b) => `<p>${text(b, lang, pHere)}</p>`).join('')}
+      ${po.body[lang].map((b) => b.startsWith('## ') ? `<h2>${text(b.slice(3), lang, pHere)}</h2>` : `<p>${text(b, lang, pHere)}</p>`).join('')}
+      <aside class="article__cta">
+        <p><strong>${fr ? 'Un projet en tête ?' : 'Got a project in mind?'}</strong> ${fr ? 'Décrivez-le en quelques lignes : je vous réponds avec un devis gratuit.' : 'Describe it in a few lines and I will reply with a free quote.'}</p>
+        <a class="btn btn--primary btn--small" href="${rel(pHere, routes.services[lang])}#devis">${t.quote}</a>
+      </aside>
+      ${(() => { const others = posts.filter((x) => x.slug !== po.slug).slice(0, 3); return others.length ? `<h2 class="related__title">${fr ? 'À lire aussi' : 'Read next'}</h2><ul class="related">${others.map((x) => `<li><a href="${rel(pHere, postPath(x.slug, lang))}">${esc(x.title[lang])}</a></li>`).join('')}</ul>` : ''; })()}
       <p><a class="link-arrow" href="${rel(pHere, here)}">${fr ? 'Tous les articles' : 'All posts'} ${icon('arrow')}</a></p>
     </div>
   </div>

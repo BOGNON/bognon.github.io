@@ -1,6 +1,6 @@
 # Champs « À COMPLÉTER » (généré par le build)
 
-Site : https://bognon.github.io/ · build du 2026-10-28
+Site : http://localhost:4173/portfolio-test/ · build du 2026-10-28
 
 | Langue | Information à fournir | Pages |
 | --- | --- | --- |

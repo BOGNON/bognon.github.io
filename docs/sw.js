@@ -8,13 +8,13 @@
 //   propose « Actualiser », puis remplace l'ancien et supprime les anciens caches.
 // - les liens externes (WhatsApp, e-mail, GitHub) ne passent jamais par ce cache.
 
-const VERSION = '81b7974832';
+const VERSION = '7cee5c7a5a';
 const PRECACHE = `bi-precache-${VERSION}`;
 const RUNTIME = 'bi-runtime';
 const PRECACHE_URLS = [
  "./",
  "a-propos/",
- "assets/css/styles.css?v=e84d56bea6",
+ "assets/css/styles.css?v=1b785e670b",
  "assets/fonts/fraunces.woff2",
  "assets/fonts/inter.woff2",
  "assets/icons/apple-touch-icon.png",
@@ -31,8 +31,12 @@ const PRECACHE_URLS = [
  "assets/img/logo-lecodetech-96.webp",
  "assets/js/main.js?v=17fbb97f49",
  "blog/",
+ "blog/etre-trouve-sur-google/",
  "blog/feed.xml",
  "blog/lancement-du-portfolio/",
+ "blog/preparer-son-projet-de-site-web/",
+ "blog/site-vitrine-ou-boutique-en-ligne/",
+ "blog/vendre-avec-whatsapp-et-un-site-web/",
  "catalogue/",
  "competences/",
  "confidentialite/",
@@ -40,8 +44,12 @@ const PRECACHE_URLS = [
  "en/",
  "en/about/",
  "en/blog/",
+ "en/blog/etre-trouve-sur-google/",
  "en/blog/feed.xml",
  "en/blog/lancement-du-portfolio/",
+ "en/blog/preparer-son-projet-de-site-web/",
+ "en/blog/site-vitrine-ou-boutique-en-ligne/",
+ "en/blog/vendre-avec-whatsapp-et-un-site-web/",
  "en/catalogue/",
  "en/contact/",
  "en/legal-notice/",
