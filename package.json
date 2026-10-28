@@ -1,0 +1,26 @@
+{
+  "name": "portfolio-bognon-isaac",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfolio professionnel bilingue (FR/EN) de BOGNON ISAAC : site statique, PWA hors ligne, prêt pour GitHub Pages.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs 8080",
+    "check": "node tests/check-site.mjs",
+    "validate": "html-validate \"docs/**/*.html\"",
+    "test:browser": "node tests/browser.cjs",
+    "lighthouse": "node tests/lighthouse.cjs",
+    "test": "npm run build && npm run check && npm run validate && npm run test:browser"
+  },
+  "devDependencies": {
+    "axe-core": "^4.14.0",
+    "html-validate": "^11.17.0",
+    "lighthouse": "^13.6.0",
+    "playwright": "1.63.0"
+  }
+}
