@@ -36,13 +36,13 @@ Dans `site.mjs` :
 ```js
 contact: {
   email: 'isaacbognon@icloud.com',
-  whatsapp: '2290152390436',            // chiffres seulement : indicatif 229 + numéro, sans + ni espaces
-  whatsappDisplay: '+229 01 52 39 04 36',
+  whatsapp: '22952390436',            // chiffres seulement : indicatif 229 + numéro, sans + ni espaces
+  whatsappDisplay: '+229 52 39 04 36',
 },
 social: { linkedin: 'https://www.linkedin.com/in/…', github: 'https://github.com/BOGNON', … },
 ```
 
-Vérifiez le numéro WhatsApp en ouvrant `https://wa.me/2290152390436` sur votre téléphone : la conversation doit s'ouvrir
+Vérifiez le numéro WhatsApp en ouvrant `https://wa.me/22952390436` sur votre téléphone : la conversation doit s'ouvrir
 avec votre compte. Une valeur vide (`''`) masque l'élément partout sur le site.
 
 ## Afficher un tarif
@@ -106,8 +106,8 @@ Remplacez les fichiers de `src/assets/img/` en gardant **exactement les mêmes n
 
 ## Changer les couleurs ou les polices
 
-En haut de `src/assets/css/styles.css`, les variables `--ink` (fond sombre), `--paper` (fond clair), `--gold`
-(accent) et `--font-display` / `--font-body`. Vérifiez ensuite les contrastes avec `npm test` (axe-core).
+En haut de `src/assets/css/styles.css`, les variables `--ink` (fond sombre), `--paper` (fond clair), `--blue` et
+`--yellow` (couleurs LeCodeTech) et `--font-display` / `--font-body`. Vérifiez ensuite les contrastes avec `npm test` (axe-core).
 
 ## Contrôles réguliers
 

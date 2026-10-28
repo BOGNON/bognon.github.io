@@ -20,7 +20,7 @@ const ORIGIN = `http://localhost:${PORT}`;
 const SITE = ORIGIN + BASE;
 const OUT_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'bi-site-'));
 const SHOTS = process.env.SHOTS || '';
-const WA = '2290152390436';
+const WA = '22952390436';
 
 const results = [];
 let failed = 0;

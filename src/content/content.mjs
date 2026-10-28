@@ -58,7 +58,6 @@ export const profile = {
   languages: [
     { name: { fr: 'Français', en: 'French' }, level: { fr: 'Courant', en: 'Fluent' } },
     { name: { fr: 'Goun', en: 'Gun (Goun)' }, level: { fr: 'Langue maternelle', en: 'Native' } },
-    { name: { fr: 'Anglais', en: 'English' }, level: { fr: '{{TODO: niveau}}', en: '{{TODO: level}}' } },
   ],
   interests: [
     { fr: 'Nouvelles technologies et innovations numériques', en: 'New technologies and digital innovation' },

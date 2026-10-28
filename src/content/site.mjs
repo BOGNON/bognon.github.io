@@ -28,20 +28,28 @@ export const site = {
     // Source : CV fourni (novembre 2025).
     email: 'isaacbognon@icloud.com',
     // Numéro WhatsApp au format international, chiffres uniquement, sans « + » ni espaces.
-    // À CONFIRMER : le CV indique +229 52 39 04 36 ; depuis la migration béninoise
-    // vers 10 chiffres, ce numéro s'écrit +229 01 52 39 04 36.
-    whatsapp: '2290152390436',
-    whatsappDisplay: '+229 01 52 39 04 36',
+    // Source : lien WhatsApp fourni par Isaac BOGNON le 28/10/2026 (wa.me/22952390436).
+    whatsapp: '22952390436',
+    whatsappDisplay: '+229 52 39 04 36',
   },
 
   // Réseaux professionnels : coller l'URL complète. Vide = non affiché.
   social: {
-    linkedin: '',
-    github: '',
-    facebook: '',
-    instagram: '',
-    youtube: '',
-    x: '',
+    linkedin: 'https://www.linkedin.com/in/isaac-bognon-2165aa252',
+    facebook: 'https://www.facebook.com/Bognonisaac',
+    instagram: 'https://www.instagram.com/isaac.bognon',
+    tiktok: 'https://www.tiktok.com/@isaac.bognon',
+    x: 'https://x.com/b23x100',
+    snapchat: 'https://snapchat.com/t/spnZBRDG',
+    // Lien d'invitation : à remplacer s'il expire (Discord > Inviter > « N'expire jamais »).
+    discord: 'https://discord.gg/j5jBrZGf',
+  },
+
+  // Entreprise fondée par Isaac BOGNON.
+  company: {
+    name: 'LeCodeTech',
+    url: 'https://lecodetech.com',
+    foundingDate: '2026',
   },
 
   // Mentions légales (Bénin) : à remplir si l'activité est déclarée.
@@ -57,5 +65,5 @@ export const site = {
     bing: '',
   },
 
-  themeColor: '#0e1116',
+  themeColor: '#0a0f2e',
 };

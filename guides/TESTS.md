@@ -41,7 +41,7 @@ Commandes : `npm test` (build + contrôles statiques + validation HTML + 39 test
 - **Le site publié sur GitHub Pages** : le dépôt n'existait pas encore au moment des tests. Suivez la liste de
   vérification de [PUBLICATION.md](PUBLICATION.md) après la mise en ligne.
 - **L'envoi réel** d'un message WhatsApp ou d'un e-mail : les tests vérifient que le bon lien est ouvert avec le bon
-  contenu, pas la réception. Le numéro WhatsApp `+229 01 52 39 04 36` doit être confirmé.
+  contenu, pas la réception.
 - **Les liens externes** (wa.me, docs.github.com) : non joignables depuis l'environnement de test.
 - **Safari (iPhone, macOS) et Firefox**, et de vrais téléphones : seul Chromium a été utilisé. Le code n'utilise que des
   fonctions standard prises en charge par ces navigateurs, mais un essai sur votre téléphone reste nécessaire.

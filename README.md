@@ -23,7 +23,7 @@ ouvrent l'e-mail ou WhatsApp avec un message prérempli.
 Les informations pas encore fournies (marquées `{{TODO: …}}` dans `src/content/content.mjs`) ne sont jamais
 affichées : l'élément concerné est simplement masqué. La liste à jour est dans [A-COMPLETER.md](A-COMPLETER.md),
 régénérée à chaque build. Les couleurs de marque se changent en haut de `src/assets/css/styles.css`
-(`--brand`, `--brand-light`, `--brand-deep`, `--accent-2`, `--accent-3`).
+(`--blue` #1F3BD1 et `--yellow` #FFE34F, couleurs de LeCodeTech). Le logo est dans `src/assets/img/logo-lecodetech-*`.
 
 ## Lancer le site sur votre ordinateur
 

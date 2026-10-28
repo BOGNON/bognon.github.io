@@ -131,8 +131,18 @@ function icon(name) {
 
 // ---------------------------------------------------------------- données structurées
 const personId = `${SITE_URL}/#person`;
+const orgId = `${SITE_URL}/#lecodetech`;
+const CO = site.company;
+const brandMark = (r) => `<img class="brand__mark" src="${r('assets/img/logo-lecodetech-96.webp')}" width="38" height="38" alt="">`;
+const socialLabel = { linkedin: 'LinkedIn', facebook: 'Facebook', instagram: 'Instagram', tiktok: 'TikTok', x: 'X (Twitter)', snapchat: 'Snapchat', discord: 'Discord', github: 'GitHub', youtube: 'YouTube' };
+const socialLinks = () => Object.entries(site.social).filter(([, v]) => v).map(([k, v]) => [socialLabel[k] || k, v]);
+const orgLd = () => ({
+  '@type': 'Organization', '@id': orgId, name: CO.name, url: CO.url, foundingDate: CO.foundingDate,
+  logo: abs('assets/img/logo-lecodetech-512.png'), founder: { '@id': personId },
+  address: { '@type': 'PostalAddress', addressLocality: site.person.city, addressCountry: site.person.countryCode },
+});
 function personLd(lang) {
-  const sameAs = Object.values(site.social).filter(Boolean);
+  const sameAs = Object.entries(site.social).filter(([k, v]) => v && k !== 'discord').map(([, v]) => v);
   return {
     '@type': 'Person', '@id': personId, name: site.person.fullName, alternateName: site.brand,
     givenName: site.person.givenName, familyName: site.person.familyName,
@@ -142,6 +152,7 @@ function personLd(lang) {
     address: { '@type': 'PostalAddress', addressLocality: site.person.city, addressCountry: site.person.countryCode },
     knowsLanguage: ['fr', 'guw'],
     knowsAbout: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL', lang === 'fr' ? 'Développement web' : 'Web development', lang === 'fr' ? 'Graphisme' : 'Graphic design', lang === 'fr' ? 'Entrepreneuriat' : 'Entrepreneurship'],
+    ...(CO ? { worksFor: { '@id': orgId } } : {}),
     ...(sameAs.length ? { sameAs } : {}),
   };
 }
@@ -170,7 +181,7 @@ function layout(p) {
     const cur = p.section === k;
     return `<li><a href="${r(routes[k][lang])}"${cur ? ' aria-current="page"' : ''}>${t.nav[k]}</a></li>`;
   }).join('');
-  const social = Object.entries(site.social).filter(([, v]) => v);
+  const social = socialLinks();
   const ogImage = abs(p.ogImage || 'assets/img/og-bognon-isaac.jpg');
 
   return `<!doctype html>
@@ -219,7 +230,7 @@ ${ld['@graph'].length ? `<script type="application/ld+json">${JSON.stringify(ld)
 <header class="site-header">
   <div class="container site-header__inner">
     <a class="brand" href="${r(routes.home[lang])}">
-      <span class="brand__mark" aria-hidden="true">IB</span>
+      ${brandMark(r)}
       <span class="brand__name">BOGNON <span>ISAAC</span></span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle hidden>${icon('menu')}<span>${t.menu}</span></button>
@@ -236,8 +247,9 @@ ${p.body}
 <footer class="site-footer">
   <div class="container site-footer__grid">
     <div>
-      <a class="brand brand--light" href="${r(routes.home[lang])}"><span class="brand__mark" aria-hidden="true">IB</span><span class="brand__name">BOGNON <span>ISAAC</span></span></a>
+      <a class="brand brand--light" href="${r(routes.home[lang])}">${brandMark(r)}<span class="brand__name">BOGNON <span>ISAAC</span></span></a>
       <p class="site-footer__tag">${esc(t.footerTag)}</p>
+      ${CO ? `<p class="site-footer__company">${lang === 'fr' ? 'Fondateur de' : 'Founder of'} <a href="${CO.url}" target="_blank" rel="noopener">${CO.name}</a></p>` : ''}
     </div>
     <div>
       <h2 class="site-footer__title">${t.navTitle}</h2>
@@ -249,8 +261,8 @@ ${p.body}
         ${hasMail ? `<li><a href="mailto:${C.email}">${C.email}</a></li>` : ''}
         ${hasWa ? `<li><a href="https://wa.me/${C.whatsapp}" target="_blank" rel="noopener">WhatsApp ${C.whatsappDisplay}</a></li>` : ''}
         <li>${t.location}</li>
-        ${social.map(([k, v]) => `<li><a href="${esc(v)}" rel="me noopener" target="_blank">${k[0].toUpperCase() + k.slice(1)}</a></li>`).join('')}
-      </ul>
+        </ul>
+      ${social.length ? `<ul class="socials">${social.map(([k, v]) => `<li><a href="${esc(v)}" rel="me noopener" target="_blank">${k}</a></li>`).join('')}</ul>` : ''}
     </div>
     <div>
       <h2 class="site-footer__title">${t.legalTitle}</h2>
@@ -406,6 +418,7 @@ for (const lang of LANGS) {
       ld: [
         personLd(lang),
         { '@type': 'WebSite', '@id': `${SITE_URL}/#website`, url: abs(''), name: site.brand, inLanguage: ['fr', 'en'], publisher: { '@id': personId } },
+        ...(CO ? [orgLd()] : []),
       ],
       body: `
 <section class="hero">
@@ -414,6 +427,7 @@ for (const lang of LANGS) {
     <div class="hero__text">
       <p class="kicker kicker--light intro-anim" style="--i:0">${esc(profile.headline[lang])} · ${t.location}</p>
       <h1 class="hero__title intro-anim" style="--i:1"><span class="text-grad">Isaac</span> BOGNON</h1>
+      ${CO ? `<p class="hero__company intro-anim" style="--i:2"><img src="${rel(here, 'assets/img/logo-lecodetech-96.webp')}" width="28" height="28" alt="">${fr ? 'Fondateur de' : 'Founder of'} <a href="${CO.url}" target="_blank" rel="noopener">${CO.name}</a></p>` : ''}
       <p class="hero__lead intro-anim" style="--i:2">${text(profile.intro[lang], lang, here)}</p>
       <div class="btn-row intro-anim" style="--i:3">
         <a class="btn btn--primary" href="${rel(here, routes.services[lang])}#devis">${t.quote}</a>
@@ -506,6 +520,7 @@ ${pageHero(fr ? 'À propos' : 'About', fr ? 'Isaac BOGNON, développeur web et e
       <p>${text(profile.bioMore[lang], lang, here)}</p>
       <dl class="facts">
         <div><dt>${fr ? 'Basé à' : 'Based in'}</dt><dd>${t.location}</dd></div>
+        ${CO ? `<div><dt>${fr ? 'Entreprise' : 'Company'}</dt><dd><a href="${CO.url}" target="_blank" rel="noopener">${CO.name}</a>${fr ? `, fondée en ${CO.foundingDate}` : `, founded in ${CO.foundingDate}`}</dd></div>` : ''}
         <div><dt>${fr ? 'Langues' : 'Languages'}</dt><dd>${profile.languages.map((l) => [esc(l.name[lang]), text(l.level[lang], lang, here)]).filter(([, lv]) => lv).map(([n, lv]) => `${n}${fr ? ' : ' : ': '}${lv}`).join('<br>')}</dd></div>
       </dl>
       <div class="btn-row">
@@ -809,7 +824,7 @@ ${pageHero('Blog', fr ? 'Actualités' : 'News', fr ? 'Projets en cours, conseils
   // ------------------------------------------------ Contact
   {
     const here = routes.contact[lang];
-    const social = Object.entries(site.social).filter(([, v]) => v);
+    const social = socialLinks();
     add({
       key: 'contact', section: 'contact', lang, path: here, alternates: alts('contact'),
       title: fr ? 'Contacter Isaac BOGNON' : 'Contact Isaac BOGNON',
@@ -817,16 +832,16 @@ ${pageHero('Blog', fr ? 'Actualités' : 'News', fr ? 'Projets en cours, conseils
       crumbs: [crumbHome(lang), { name: t.nav.contact, path: here }],
       ld: [{ '@type': 'ContactPage', url: abs(here), inLanguage: lang, mainEntity: { '@id': personId } }],
       body: `
-${pageHero('Contact', fr ? 'Parlons de votre projet' : 'Let’s talk about your project', text(fr ? 'Écrivez-moi pour un devis, une commande ou un partenariat. {{TODO: préciser si vous répondez en anglais}}' : 'Write to me for a quote, an order or a partnership. {{TODO: state whether you reply in English}}', lang, routes.contact[lang]))}
+${pageHero('Contact', fr ? 'Parlons de votre projet' : 'Let’s talk about your project', text(fr ? 'Écrivez-moi pour un devis, une commande ou un partenariat.' : 'Write to me for a quote, an order or a partnership.', lang, routes.contact[lang]))}
 <section class="section section--tight">
   <div class="container contact">
     <div class="contact__channels reveal">
       ${hasMail ? `<a class="channel" href="mailto:${C.email}">${icon('mail')}<span><strong>E-mail</strong>${C.email}</span></a>` : ''}
       ${hasWa ? `<a class="channel" href="${esc(waLink(C.whatsapp, waMsg(lang, fr ? 'je vous contacte depuis votre site.' : 'I am contacting you from your website.')))}" target="_blank" rel="noopener">${icon('wa')}<span><strong>WhatsApp</strong>${C.whatsappDisplay}</span></a>` : ''}
       <p class="channel channel--static">${icon('pin')}<span><strong>${fr ? 'Localisation' : 'Location'}</strong>${t.location}</span></p>
-      ${social.length ? `<div class="channel channel--static"><span><strong>${fr ? 'Réseaux professionnels' : 'Professional networks'}</strong>
-        ${social.map(([k, v]) => `<a href="${esc(v)}" rel="me noopener" target="_blank">${k[0].toUpperCase() + k.slice(1)}</a>`).join(' · ')}
-      </span></div>` : text(fr ? '{{TODO: liens LinkedIn, GitHub, Facebook… à ajouter dans src/content/site.mjs}}' : '{{TODO: LinkedIn, GitHub, Facebook… links to add in src/content/site.mjs}}', lang, here)}
+      ${social.length ? `<div class="channel channel--static"><div><strong>${fr ? 'Réseaux sociaux' : 'Social media'}</strong>
+        <ul class="socials socials--dark">${social.map(([k, v]) => `<li><a href="${esc(v)}" rel="me noopener" target="_blank">${k}</a></li>`).join('')}</ul>
+      </div></div>` : text(fr ? '{{TODO: liens LinkedIn, GitHub, Facebook… à ajouter dans src/content/site.mjs}}' : '{{TODO: LinkedIn, GitHub, Facebook… links to add in src/content/site.mjs}}', lang, here)}
     </div>
     <div class="contact__form reveal">
       <h2>${fr ? 'Écrire un message' : 'Write a message'}</h2>
@@ -952,7 +967,7 @@ function standalone(kind) {
 </head>
 <body class="page-standalone">
 <main class="standalone">
-  <a class="brand brand--light" href="${B}"><span class="brand__mark" aria-hidden="true">IB</span><span class="brand__name">BOGNON <span>ISAAC</span></span></a>
+  <a class="brand brand--light" href="${B}">${brandMark((p) => B + p)}<span class="brand__name">BOGNON <span>ISAAC</span></span></a>
   <h1>${isOffline ? 'Vous êtes hors connexion' : 'Page introuvable'}</h1>
   <p>${isOffline
     ? 'Cette page n’a pas encore été enregistrée sur votre appareil. Les pages déjà visitées restent consultables. Reconnectez-vous pour voir le reste du site. Les envois par e-mail ou WhatsApp nécessitent une connexion.'
@@ -975,7 +990,8 @@ fs.writeFileSync(path.join(OUT, '404.html'), standalone('404'));
 
 // Favicon SVG
 fs.writeFileSync(path.join(OUT, 'assets/icons/favicon.svg'),
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0e1116"/><text x="32" y="40" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="26" text-anchor="middle" fill="#c9a15a">IB</text><rect x="20" y="47" width="24" height="2.5" fill="#c9a15a"/></svg>\n`);
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><image width="96" height="96" href="data:image/png;base64,${fs.readFileSync(path.join(SRC, 'assets/img/logo-lecodetech-96.png')).toString('base64')}"/></svg>
+`);
 
 // Manifest
 fs.writeFileSync(path.join(OUT, 'manifest.webmanifest'), JSON.stringify({
@@ -989,7 +1005,7 @@ fs.writeFileSync(path.join(OUT, 'manifest.webmanifest'), JSON.stringify({
   scope: './',
   display: 'standalone',
   orientation: 'any',
-  background_color: '#f7f5f0',
+  background_color: '#1F3BD1',
   theme_color: site.themeColor,
   categories: ['business', 'productivity'],
   icons: [
