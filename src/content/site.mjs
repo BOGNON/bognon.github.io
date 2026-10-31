@@ -17,11 +17,11 @@ export const site = {
   person: {
     givenName: 'Isaac',
     familyName: 'BOGNON',
-    fullName: 'Isaac BOGNON',
+    fullName: 'BOGNON ISAAC',
     city: 'Porto-Novo',
     countryCode: 'BJ',
     country: { fr: 'Bénin', en: 'Benin' },
-    jobTitle: { fr: 'Développeur web & entrepreneur', en: 'Web developer & entrepreneur' },
+    jobTitle: { fr: 'Développeur web & chef d’entreprise', en: 'Web developer & business owner' },
   },
 
   contact: {

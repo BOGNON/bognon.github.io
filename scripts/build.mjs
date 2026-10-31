@@ -97,7 +97,7 @@ function picture(name, { alt, widths, ext, w, h, sizes, cls = '', eager = false,
     `<img src="${r(`assets/img/${name}-${largest}.${ext}`)}" srcset="${srcset(ext)}" sizes="${sizes}" width="${w}" height="${h}" alt="${esc(alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"></picture>`;
 }
 const portrait = (lang, from, opts = {}) => picture('isaac-bognon-portrait', {
-  alt: lang === 'fr' ? 'Portrait souriant d’Isaac BOGNON en tenue traditionnelle brodée' : 'Smiling portrait of Isaac BOGNON wearing an embroidered traditional outfit',
+  alt: lang === 'fr' ? 'Portrait souriant de BOGNON ISAAC en tenue traditionnelle brodée' : 'Smiling portrait of BOGNON ISAAC wearing an embroidered traditional outfit',
   widths: [240, 480], ext: 'jpg', w: 480, h: 480, sizes: '(min-width: 900px) 380px, 70vw', from, ...opts,
 });
 // Image décrite dans content.mjs : { name, widths, ext, width, height } + texte alternatif bilingue.
@@ -133,7 +133,7 @@ function icon(name) {
 const personId = `${SITE_URL}/#person`;
 const orgId = `${SITE_URL}/#lecodetech`;
 const CO = site.company;
-const brandMark = (r) => `<img class="brand__mark" src="${r('assets/img/logo-lecodetech-96.webp')}" width="38" height="38" alt="">`;
+const brandMark = (r) => `<img class="brand__mark" src="${r('assets/img/monogramme-bi-96.webp')}" width="38" height="38" alt="">`;
 const socialLabel = { linkedin: 'LinkedIn', facebook: 'Facebook', instagram: 'Instagram', tiktok: 'TikTok', x: 'X (Twitter)', snapchat: 'Snapchat', discord: 'Discord', github: 'GitHub', youtube: 'YouTube' };
 const socialLinks = () => Object.entries(site.social).filter(([, v]) => v).map(([k, v]) => [socialLabel[k] || k, v]);
 const orgLd = () => ({
@@ -144,7 +144,7 @@ const orgLd = () => ({
 function personLd(lang) {
   const sameAs = Object.entries(site.social).filter(([k, v]) => v && k !== 'discord').map(([, v]) => v);
   return {
-    '@type': 'Person', '@id': personId, name: site.person.fullName, alternateName: [site.brand, 'Bognon Isaac', 'Isaac Bognon'],
+    '@type': 'Person', '@id': personId, name: site.person.fullName, alternateName: ['Isaac BOGNON', 'Bognon Isaac', 'Isaac Bognon'],
     description: plain(profile.bio[lang]),
     hasOccupation: { '@type': 'Occupation', name: site.person.jobTitle[lang], occupationLocation: { '@type': 'City', name: site.person.city } },
     homeLocation: { '@type': 'Place', name: `${site.person.city}, ${site.person.country[lang]}` },
@@ -159,27 +159,27 @@ function personLd(lang) {
     ...(sameAs.length ? { sameAs } : {}),
   };
 }
-// Questions-réponses factuelles sur Isaac BOGNON (page À propos) : utiles aux moteurs de recherche et aux assistants IA.
+// Questions-réponses factuelles sur BOGNON ISAAC (page À propos) : utiles aux moteurs de recherche et aux assistants IA.
 function whoIs(lang) {
   const fr = lang === 'fr';
   const net = socialLinks().filter(([k]) => k !== 'Discord').map(([k]) => k).join(', ');
   return [
-    [fr ? 'Qui est Isaac BOGNON ?' : 'Who is Isaac BOGNON?',
-      fr ? `Isaac BOGNON (BOGNON ISAAC) est un développeur web et chef d’entreprise basé à Porto-Novo, au Bénin, fondateur de ${CO.name} en ${CO.foundingDate}. Isaac conçoit des sites vitrines, des boutiques en ligne et des plateformes web.`
-        : `Isaac BOGNON (BOGNON ISAAC) is a web developer and business owner based in Porto-Novo, Benin, who founded ${CO.name} in ${CO.foundingDate}. Isaac builds business websites, online shops and web platforms.`],
-    [fr ? 'Que propose Isaac BOGNON ?' : 'What does Isaac BOGNON offer?',
+    [fr ? 'Qui est BOGNON ISAAC ?' : 'Who is BOGNON ISAAC?',
+      fr ? `BOGNON ISAAC (BOGNON ISAAC) est un développeur web et chef d’entreprise basé à Porto-Novo, au Bénin, fondateur de ${CO.name} en ${CO.foundingDate}. BOGNON ISAAC conçoit des sites vitrines, des boutiques en ligne et des plateformes web.`
+        : `BOGNON ISAAC (BOGNON ISAAC) is a web developer and business owner based in Porto-Novo, Benin, who founded ${CO.name} in ${CO.foundingDate}. BOGNON ISAAC builds business websites, online shops and web platforms.`],
+    [fr ? 'Que propose BOGNON ISAAC ?' : 'What does BOGNON ISAAC offer?',
       fr ? `Création de sites web et de boutiques en ligne, applications web, maintenance, mise en ligne, création graphique, automatisation avec l’IA et formation au numérique. Chaque projet fait l’objet d’un devis gratuit.`
         : `Websites and online shops, web applications, maintenance, deployment, graphic design, AI automation and digital skills training. Every project starts with a free quote.`],
-    [fr ? 'Quelles sont les compétences techniques d’Isaac BOGNON ?' : 'What are Isaac BOGNON’s technical skills?',
+    [fr ? 'Quelles sont les compétences techniques de BOGNON ISAAC ?' : 'What are BOGNON ISAAC’s technical skills?',
       fr ? 'HTML, CSS, JavaScript, PHP et MySQL pour le développement web ; Canva, Photoshop et Illustrator pour le graphisme ; intégration d’outils d’intelligence artificielle, hébergement, déploiement et tests.'
         : 'HTML, CSS, JavaScript, PHP and MySQL for web development; Canva, Photoshop and Illustrator for design; AI tool integration, hosting, deployment and testing.'],
     [fr ? `Qu’est-ce que ${CO.name} ?` : `What is ${CO.name}?`,
-      fr ? `${CO.name} est l’entreprise fondée par Isaac BOGNON en ${CO.foundingDate}. Site officiel : ${CO.url.replace('https://', '')}.`
-        : `${CO.name} is the company Isaac BOGNON founded in ${CO.foundingDate}. Official website: ${CO.url.replace('https://', '')}.`],
-    [fr ? 'Quel livre a écrit Isaac BOGNON ?' : 'What book has Isaac BOGNON written?',
+      fr ? `${CO.name} est l’entreprise fondée par BOGNON ISAAC en ${CO.foundingDate}. Site officiel : ${CO.url.replace('https://', '')}.`
+        : `${CO.name} is the company BOGNON ISAAC founded in ${CO.foundingDate}. Official website: ${CO.url.replace('https://', '')}.`],
+    [fr ? 'Quel livre a écrit BOGNON ISAAC ?' : 'What book has BOGNON ISAAC written?',
       fr ? `« ${book.title} », un recueil d’idées d’affaires adaptées au marché africain, écrit pour guider et motiver les jeunes entrepreneurs.`
         : `“${book.title}” (The Entrepreneurs’ Gold Mine), a collection of business ideas suited to the African market, written to guide and motivate young entrepreneurs.`],
-    [fr ? 'Comment contacter Isaac BOGNON ?' : 'How can I contact Isaac BOGNON?',
+    [fr ? 'Comment contacter BOGNON ISAAC ?' : 'How can I contact BOGNON ISAAC?',
       fr ? `Par e-mail à ${C.email}, sur WhatsApp au ${C.whatsappDisplay}, ou sur les réseaux sociaux : ${net}.`
         : `By email at ${C.email}, on WhatsApp at ${C.whatsappDisplay}, or on social media: ${net}.`],
   ];
@@ -439,7 +439,7 @@ for (const lang of LANGS) {
     const top = services.slice(0, 3);
     add({
       key: 'home', section: 'home', lang, path: here, alternates: alts('home'),
-      title: fr ? 'BOGNON ISAAC | Développeur web & entrepreneur au Bénin' : 'BOGNON ISAAC | Web developer & entrepreneur in Benin',
+      title: fr ? 'BOGNON ISAAC | Développeur web et chef d’entreprise au Bénin' : 'BOGNON ISAAC | Web developer and business owner in Benin',
       description: fr
         ? 'BOGNON ISAAC, développeur web et entrepreneur à Porto-Novo (Bénin) : sites vitrines, e-commerce, plateformes web, graphisme et livre pour entrepreneurs.'
         : 'BOGNON ISAAC, web developer and entrepreneur in Porto-Novo, Benin: business websites, online shops, web platforms, graphic design and a book for entrepreneurs.',
@@ -454,7 +454,7 @@ for (const lang of LANGS) {
   <div class="container hero__inner">
     <div class="hero__text">
       <p class="kicker kicker--light intro-anim" style="--i:0">${esc(profile.headline[lang])} · ${t.location}</p>
-      <h1 class="hero__title intro-anim" style="--i:1"><span class="text-grad">Isaac</span> BOGNON</h1>
+      <h1 class="hero__title intro-anim" style="--i:1">BOGNON <span class="text-grad">ISAAC</span></h1>
       <p class="hero__roles intro-anim" style="--i:2"><span class="sr-only">${profile.roles[lang].join(', ')}</span><span class="roles" aria-hidden="true" data-roles="${esc(JSON.stringify(profile.roles[lang]))}">${esc(profile.roles[lang][0])}</span></p>
       ${CO ? `<p class="hero__company intro-anim" style="--i:2"><img src="${rel(here, 'assets/img/logo-lecodetech-96.webp')}" width="28" height="28" alt="">${fr ? 'Fondateur de' : 'Founder of'} <a href="${CO.url}" target="_blank" rel="noopener">${CO.name}</a></p>` : ''}
       <p class="hero__lead intro-anim" style="--i:2">${text(profile.intro[lang], lang, here)}</p>
@@ -473,6 +473,24 @@ for (const lang of LANGS) {
   <div class="container"><div class="figures__grid">
     ${[[services.length, fr ? 'services proposés' : 'services offered'], [skills.length, fr ? 'domaines d’expertise' : 'areas of expertise'], [1, fr ? 'livre publié' : 'book published'], [Number(CO ? CO.foundingDate : 2026), CO ? (fr ? `création de ${CO.name}` : `${CO.name} founded`) : '']].filter(([, l]) => l).map(([n, l], i) => `<div class="figure reveal" style="--d:${i}"><p class="figure__num" data-count="${n}">${n}</p><p class="figure__label">${l}</p></div>`).join('')}
   </div></div>
+</section>
+
+<section class="section">
+  <div class="container about">
+    <div class="about__media reveal">
+      ${picture('isaac-bognon-costume', { alt: fr ? 'BOGNON ISAAC en costume bordeaux, souriant, en train d’écrire' : 'BOGNON ISAAC in a burgundy suit, smiling while writing', widths: [480, 800], ext: 'jpg', w: 800, h: 1000, sizes: '(min-width: 900px) 420px, 92vw', from: here })}
+    </div>
+    <div class="about__text reveal">
+      <p class="kicker"><span class="kicker__num">00</span>${fr ? 'Portrait' : 'Profile'}</p>
+      <h2>${fr ? 'Qui est BOGNON ISAAC ?' : 'Who is BOGNON ISAAC?'}</h2>
+      <p class="lead">${text(profile.bio[lang], lang, here)}</p>
+      <ul class="check-list">${(() => { const w = whoIs(lang); return [[fr ? 'Services' : 'Services', w[1][1]], [fr ? 'Compétences' : 'Skills', w[2][1]], [fr ? 'Auteur' : 'Author', w[4][1]]].map(([k, v]) => `<li><strong>${k}${fr ? " :" : ":"}</strong> ${esc(v)}</li>`).join(''); })()}</ul>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="${rel(here, routes.about[lang])}">${fr ? 'Découvrir mon parcours' : 'Discover my background'}</a>
+        <a class="btn btn--ghost" href="${rel(here, routes.contact[lang])}">${fr ? 'Me contacter' : 'Contact me'}</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="section">
@@ -554,20 +572,20 @@ ${ctaBand(lang, here)}`,
       </li>`).join('');
     add({
       key: 'about', section: 'about', lang, path: here, alternates: alts('about'),
-      title: fr ? 'À propos d’Isaac BOGNON' : 'About Isaac BOGNON',
+      title: fr ? 'À propos de BOGNON ISAAC' : 'About BOGNON ISAAC',
       description: fr
-        ? 'Parcours d’Isaac BOGNON, développeur web et entrepreneur à Porto-Novo : expérience, formations, diplômes, langues et centres d’intérêt.'
-        : 'Background of Isaac BOGNON, web developer and entrepreneur in Porto-Novo: experience, training, qualifications, languages and interests.',
+        ? 'Parcours de BOGNON ISAAC, développeur web et entrepreneur à Porto-Novo : expérience, formations, diplômes, langues et centres d’intérêt.'
+        : 'Background of BOGNON ISAAC, web developer and entrepreneur in Porto-Novo: experience, training, qualifications, languages and interests.',
       crumbs: [crumbHome(lang), { name: t.nav.about, path: here }],
       ogType: 'profile',
       ld: [{ '@type': 'ProfilePage', url: abs(here), inLanguage: lang, mainEntity: personLd(lang) },
         { '@type': 'FAQPage', '@id': `${abs(here)}#qui`, mainEntity: whoIs(lang).map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }],
       body: `
-${pageHero(fr ? 'À propos' : 'About', fr ? 'Isaac BOGNON, développeur web et entrepreneur' : 'Isaac BOGNON, web developer and entrepreneur', '')}
+${pageHero(fr ? 'À propos' : 'About', fr ? 'BOGNON ISAAC, développeur web et entrepreneur' : 'BOGNON ISAAC, web developer and entrepreneur', '')}
 <section class="section section--tight">
   <div class="container about">
     <div class="about__media reveal">
-      ${picture('isaac-bognon-costume', { alt: fr ? 'Isaac BOGNON en costume bordeaux, souriant, en train d’écrire' : 'Isaac BOGNON in a burgundy suit, smiling while writing', widths: [480, 800], ext: 'jpg', w: 800, h: 1000, sizes: '(min-width: 900px) 420px, 92vw', from: here })}
+      ${picture('isaac-bognon-costume', { alt: fr ? 'BOGNON ISAAC en costume bordeaux, souriant, en train d’écrire' : 'BOGNON ISAAC in a burgundy suit, smiling while writing', widths: [480, 800], ext: 'jpg', w: 800, h: 1000, sizes: '(min-width: 900px) 420px, 92vw', from: here })}
     </div>
     <div class="about__text reveal">
       <p class="lead">${text(profile.bio[lang], lang, here)}</p>
@@ -613,7 +631,7 @@ ${pageHero(fr ? 'À propos' : 'About', fr ? 'Isaac BOGNON, développeur web et e
 </section>
 <section class="section" id="qui">
   <div class="container narrow">
-    ${sectionHead('05', fr ? 'En bref' : 'In short', fr ? 'Qui est Isaac BOGNON ?' : 'Who is Isaac BOGNON?')}
+    ${sectionHead('05', fr ? 'En bref' : 'In short', fr ? 'Qui est BOGNON ISAAC ?' : 'Who is BOGNON ISAAC?')}
     <div class="faq">
       ${whoIs(lang).map(([q, a], i) => `<details class="faq__item reveal"${i === 0 ? ' open' : ''}><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}
     </div>
@@ -905,7 +923,7 @@ ${pageHero('Blog', fr ? 'Actualités' : 'News', fr ? 'Projets en cours, conseils
     const social = socialLinks();
     add({
       key: 'contact', section: 'contact', lang, path: here, alternates: alts('contact'),
-      title: fr ? 'Contacter Isaac BOGNON' : 'Contact Isaac BOGNON',
+      title: fr ? 'Contacter BOGNON ISAAC' : 'Contact BOGNON ISAAC',
       description: fr ? 'Contacter BOGNON ISAAC, développeur web à Porto-Novo (Bénin), par e-mail, WhatsApp ou formulaire.' : 'Contact BOGNON ISAAC, web developer in Porto-Novo, Benin, by email, WhatsApp or the contact form.',
       crumbs: [crumbHome(lang), { name: t.nav.contact, path: here }],
       ld: [{ '@type': 'ContactPage', url: abs(here), inLanguage: lang, mainEntity: { '@id': personId } }],
@@ -950,8 +968,8 @@ ${pageHero(fr ? 'Informations' : 'Information', t.nav.legal, '')}
     ${L.ifu || L.rccm ? `<p>${L.ifu ? `IFU : ${esc(L.ifu)}` : ''}${L.ifu && L.rccm ? '<br>' : ''}${L.rccm ? `RCCM : ${esc(L.rccm)}` : ''}</p>` : text(fr ? '{{TODO: numéros IFU et RCCM, si l’activité est déclarée}}' : '{{TODO: IFU and RCCM numbers, if the business is registered}}', lang, here)}
     <h2>${fr ? 'Propriété intellectuelle' : 'Intellectual property'}</h2>
     <p>${fr
-      ? 'Les textes, photographies, le livre « La Mine d’Or des Entrepreneurs » et les visuels de ce site appartiennent à Isaac BOGNON, sauf mention contraire. Toute reproduction sans autorisation écrite est interdite. Les polices Fraunces et Inter sont utilisées sous licence SIL Open Font License 1.1.'
-      : 'The texts, photographs, the book “La Mine d’Or des Entrepreneurs” and the visuals on this site belong to Isaac BOGNON unless stated otherwise. Reproduction without written permission is prohibited. The Fraunces and Inter fonts are used under the SIL Open Font License 1.1.'}</p>
+      ? 'Les textes, photographies, le livre « La Mine d’Or des Entrepreneurs » et les visuels de ce site appartiennent à BOGNON ISAAC, sauf mention contraire. Toute reproduction sans autorisation écrite est interdite. Les polices Fraunces et Inter sont utilisées sous licence SIL Open Font License 1.1.'
+      : 'The texts, photographs, the book “La Mine d’Or des Entrepreneurs” and the visuals on this site belong to BOGNON ISAAC unless stated otherwise. Reproduction without written permission is prohibited. The Fraunces and Inter fonts are used under the SIL Open Font License 1.1.'}</p>
     <h2>${fr ? 'Responsabilité' : 'Liability'}</h2>
     <p>${fr
       ? 'Les informations de ce site sont fournies à titre indicatif. Les tarifs, délais et conditions d’une prestation sont confirmés par écrit avant toute commande. Aucun paiement n’est effectué sur ce site.'
@@ -1066,7 +1084,7 @@ fs.writeFileSync(path.join(OUT, '404.html'), standalone('404'));
 
 // Favicon SVG
 fs.writeFileSync(path.join(OUT, 'assets/icons/favicon.svg'),
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><image width="96" height="96" href="data:image/png;base64,${fs.readFileSync(path.join(SRC, 'assets/img/logo-lecodetech-96.png')).toString('base64')}"/></svg>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><image width="96" height="96" href="data:image/png;base64,${fs.readFileSync(path.join(SRC, 'assets/img/monogramme-bi-96.png')).toString('base64')}"/></svg>
 `);
 
 // Manifest

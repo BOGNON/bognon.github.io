@@ -1,9 +1,9 @@
-# Isaac BOGNON (BOGNON ISAAC)
+# BOGNON ISAAC (BOGNON ISAAC)
 
 > Chef d'entreprise et fondateur de LeCodeTech, développeur web passionné par la technologie, le design et l'entrepreneuriat, je mets ma créativité et mes compétences au service de projets innovants. Je conçois et je développe des sites vitrines, des boutiques en ligne et des plateformes web, du design de l'interface jusqu'à la mise en ligne. Basé à Porto-Novo, au Bénin, je suis ouvert aux projets de clients et de partenaires du monde entier.
 
-- Nom : Isaac BOGNON, aussi écrit BOGNON ISAAC
-- Métier : Développeur web & entrepreneur ; chef d'entreprise, fondateur de LeCodeTech (2026, https://lecodetech.com)
+- Nom : BOGNON ISAAC, aussi écrit BOGNON ISAAC
+- Métier : Développeur web & chef d’entreprise ; chef d'entreprise, fondateur de LeCodeTech (2026, https://lecodetech.com)
 - Lieu : Porto-Novo, Bénin
 - Compétences : Développement web (HTML, CSS, JavaScript, PHP) ; Bases de données (MySQL) ; Graphisme (Canva, Photoshop, Illustrator) ; IA appliquée aux affaires (Modèles, Automatisation, Intégration) ; Mise en ligne et qualité (Hébergement, Domaines, Tests, Performance) ; Trading & cryptomonnaies (Analyse, Portefeuilles, Stratégies)
 - Livre : « La Mine d'Or des Entrepreneurs », Idées d'affaires adaptées au marché africain

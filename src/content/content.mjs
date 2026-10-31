@@ -9,8 +9,8 @@
 
 export const profile = {
   headline: {
-    fr: 'Développeur web & entrepreneur',
-    en: 'Web developer & entrepreneur',
+    fr: 'Développeur web & chef d’entreprise',
+    en: 'Web developer & business owner',
   },
   // Rôles affichés en alternance dans le titre de l'accueil.
   roles: {
@@ -210,7 +210,7 @@ export const book = {
     ],
   },
   details: [
-    { label: { fr: 'Auteur', en: 'Author' }, value: { fr: 'Isaac BOGNON', en: 'Isaac BOGNON' } },
+    { label: { fr: 'Auteur', en: 'Author' }, value: { fr: 'BOGNON ISAAC', en: 'BOGNON ISAAC' } },
     { label: { fr: 'Langue', en: 'Language' }, value: { fr: 'Français', en: 'French' } },
     { label: { fr: 'Formats', en: 'Formats' }, value: { fr: '{{TODO: numérique, papier ou les deux}}', en: '{{TODO: digital, print or both}}' } },
     { label: { fr: 'Année de publication', en: 'Year published' }, value: { fr: '{{TODO: année}}', en: '{{TODO: year}}' } },

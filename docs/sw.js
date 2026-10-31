@@ -8,7 +8,7 @@
 //   propose « Actualiser », puis remplace l'ancien et supprime les anciens caches.
 // - les liens externes (WhatsApp, e-mail, GitHub) ne passent jamais par ce cache.
 
-const VERSION = '00b9ee2349';
+const VERSION = 'fd3a1206ea';
 const PRECACHE = `bi-precache-${VERSION}`;
 const RUNTIME = 'bi-runtime';
 const PRECACHE_URLS = [
@@ -29,6 +29,7 @@ const PRECACHE_URLS = [
  "assets/img/isaac-bognon-portrait-480.webp",
  "assets/img/livre-mine-d-or-mockup-642.webp",
  "assets/img/logo-lecodetech-96.webp",
+ "assets/img/monogramme-bi-96.webp",
  "assets/js/main.js?v=ed6ba8168a",
  "blog/",
  "blog/etre-trouve-sur-google/",
